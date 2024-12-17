@@ -1,0 +1,7 @@
+{
+  "name": "pos",
+  "version": "1.0.0",
+  "license": "MIT",
+  "workspaces": ["core", "server", "client"],
+  "private": true
+}
