@@ -1,0 +1,16 @@
+{
+  "name": "@pos/core",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "typeorm": "^0.3.20",
+    "yarn": "^1.22.22"
+  }
+}

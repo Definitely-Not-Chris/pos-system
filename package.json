@@ -2,6 +2,11 @@
   "name": "pos",
   "version": "1.0.0",
   "license": "MIT",
-  "workspaces": ["core", "server", "client"],
-  "private": true
+  "workspaces": [
+    "apps/*"
+  ],
+  "private": true,
+  "scripts": {
+    "dev": "yarn workspace @pos/core run build && yarn workspace @pos/server run dev"
+  }
 }
