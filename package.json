@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "license": "MIT",
   "workspaces": [
-    "apps/*"
+    "apps/*",
+    "libs/*"
   ],
   "private": true,
   "scripts": {
-    "dev": "yarn workspace @pos/core run build && yarn workspace @pos/server run dev"
+    "dev": "yarn workspace @pos/core run build && yarn workspace @pos/server run dev",
+    "start": "yarn workspace @pos/core run build && yarn workspace @pos/server run start"
   }
 }
