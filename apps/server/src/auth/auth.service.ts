@@ -1,25 +1,45 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UserService } from 'src/user/user.service';
-import { User } from '@pos/core/entity'
+import { RegisterUserDto, SignInUserDto } from '@pos/core/dtos'
+import { InjectRepository } from '@nestjs/typeorm';
+import { UserEntity } from '@pos/core//entities'
+import { Repository } from 'typeorm';
+import bcrypt from 'bcrypt'
+import { ConfigService } from '@nestjs/config';
+import { JwtPayload } from './auth.type';
 
 @Injectable()
 export class AuthService {
-  constructor(private userService: UserService, private jwtService: JwtService) {}
+  constructor(
+    @InjectRepository(UserEntity)
+    private userRepository: Repository<UserEntity>,
+    private jwtService: JwtService,
+    private configService: ConfigService
+  ) {}
 
-  async signIn(email: string, password: string): Promise<{ accessToken: string }> {
-    const user = await this.userService.findOne({ email });
+  async signIn({ email, password }: SignInUserDto): Promise<{ accessToken: string }> {
+    const user = await this.userRepository.findOneBy({ email });
 
-    if (user?.password !== password) {
+    if(!user) {
       throw new UnauthorizedException();
     }
 
-    const payload = { userId: user.id, email: user.email }
-    const accessToken = await this.jwtService.signAsync(payload)
+    const passwordMatch = await bcrypt.compare(password, user.password)
+    if (!passwordMatch) {
+      throw new UnauthorizedException();
+    }
+
+    const payload = new JwtPayload(user.id, user.email)
+    const accessToken = await this.jwtService.signAsync(
+      payload, 
+      { secret: this.configService.get('JWT_SECRET_KEY') }
+    )
     return { accessToken };
   }
 
-  async register(user: User) {
-    return this.userService.create(user)
+  async register(dto: RegisterUserDto) {
+    dto.password = await bcrypt.hash(dto.password, 10);
+    const user = this.userRepository.create(dto)
+    return await user.save()
   }
 }

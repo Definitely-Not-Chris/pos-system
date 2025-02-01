@@ -9,11 +9,12 @@ export const databaseProviders = [
     port: 5432,
     username: 'postgres',
     password: 'admin',
-    database: 'pos',
+    database: 'pos-db',
     entities: [
-      __dirname + '/../../../core/dist/entity/**/*{.ts,.js}',
+      __dirname + '/../../../../libs/core/dist/entities/**/*{.ts,.js}',
     ],
     synchronize: true,
+    dropSchema: true,
     logging: true
   }),
     // {
