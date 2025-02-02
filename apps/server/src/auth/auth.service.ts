@@ -29,7 +29,7 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
-    const payload = new JwtPayload(user.id, user.email)
+    const payload = { id: user.id, email: user.email } 
     const accessToken = await this.jwtService.signAsync(
       payload, 
       { secret: this.configService.get('JWT_SECRET_KEY') }
