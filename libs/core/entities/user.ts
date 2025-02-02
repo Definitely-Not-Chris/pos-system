@@ -1,5 +1,6 @@
 import { Entity, Column } from 'typeorm';
 import { PersonEntity } from './person';
+import { RoleEnum } from '../enums/role';
 
 @Entity("User")
 export class UserEntity extends PersonEntity {
@@ -11,4 +12,9 @@ export class UserEntity extends PersonEntity {
 
   @Column({ default: true })
   isActive: boolean;
+
+  @Column('enum', { 
+    enum: RoleEnum
+  })
+  role: RoleEnum;
 }

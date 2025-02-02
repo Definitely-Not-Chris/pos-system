@@ -35,7 +35,7 @@ import { RegisterUserSchema, RegisterUserDto, SignInUserSchema, SignInUserDto } 
   
     @UseGuards(AuthGuard)
     @Get('user')
-    getProfile(@Request() req) {
+    getUser(@Request() req) {
       return req.user;
     }
   }

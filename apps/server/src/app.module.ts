@@ -6,6 +6,8 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import configuration from './config/configuration';
+import { JwtModule } from '@nestjs/jwt';
+import { RoleModule } from './role/role.module';
 
 
 @Module({
@@ -13,6 +15,8 @@ import configuration from './config/configuration';
     DatabaseModule, 
     AuthModule, 
     UserModule,
+    JwtModule,
+    RoleModule,
     ConfigModule.forRoot({
       load: [configuration],
     })
