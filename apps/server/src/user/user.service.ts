@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from '@pos/core/entities'
+import { PaginationDto } from '@pos/core/dtos';
+import { PaginationResult } from '@pos/core/types';
 
 @Injectable()
 export class UserService {
@@ -10,11 +12,16 @@ export class UserService {
     private userRepository: Repository<UserEntity>,
   ) {}
 
-  findAll(): Promise<UserEntity[]> {
-    return this.userRepository.find();
+  async getAll(dto: PaginationDto): Promise<PaginationResult<UserEntity>> {
+    const [data, total] = await this.userRepository.findAndCount({ 
+      skip: (dto.page - 1) * dto.pageSize,
+      take: dto.page
+    });
+
+    return { data, total, ...dto }
   }
 
-  findOne(query: Partial<UserEntity>): Promise<UserEntity | null> {
+  getOne(query: Partial<UserEntity>): Promise<UserEntity | null> {
     return this.userRepository.findOneBy(query as any);
   }
 
