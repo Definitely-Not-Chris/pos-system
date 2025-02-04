@@ -42,4 +42,14 @@ export class AuthService {
     const user = this.userRepository.create(dto)
     return await user.save()
   }
+
+  async getUserByToken(token: string): Promise<UserEntity> {
+    const payload = await this.jwtService.verifyAsync(
+      token,
+      { secret: this.configService.get('JWT_SECRET_KEY') }
+    );
+
+    const user = await this.userRepository.findOneBy({ id: payload.id })
+    return user
+  }
 }
