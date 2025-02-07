@@ -11,7 +11,7 @@ export function TextField({ label, type }: TextFieldProps) {
                 placeholder={label} 
                 className={clsx(
                     'bg-gray-100/75 border border-gray-200/50 rounded-full py-3 px-5.5 flex-1',
-                    'hover:outline-indigo-400 focus:outline-indigo-400 placeholder:text-gray-400',
+                    'hover:outline-blue-400 focus:outline-blue-400 placeholder:text-gray-400',
                     'focus:bg-white'
                 )}
                 type={type}

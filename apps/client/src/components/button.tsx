@@ -11,8 +11,8 @@ export function Button({ children, className, ...others }: ButtonProps) {
         <button 
             className={clsx(
                 className, 
-                'disabled:bg-indigo-300 hover:bg-indigo-400/75 cursor-pointer',
-                'shadow text-center p-3 bg-indigo-400 rounded-full font-medium text-white'
+                'disabled:bg-blue-300 hover:bg-blue-400/75 cursor-pointer',
+                'shadow text-center p-3 bg-blue-400 rounded-full font-medium text-white'
             )}
             {...others}
         >
