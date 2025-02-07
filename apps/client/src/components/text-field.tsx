@@ -1,8 +1,7 @@
 import clsx from "clsx"
 
-export interface TextFieldProps {
+export interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
     label?: string,
-    type?: string
 }
 export function TextField({ label, type }: TextFieldProps) {
     return (
@@ -11,7 +10,7 @@ export function TextField({ label, type }: TextFieldProps) {
             <input 
                 placeholder={label} 
                 className={clsx(
-                    'bg-gray-100 border border-gray-200/75 rounded-lg py-2.5 px-3.5 flex-1',
+                    'bg-gray-100/75 border border-gray-200/50 rounded-full py-3 px-5.5 flex-1',
                     'hover:outline-indigo-400 focus:outline-indigo-400 placeholder:text-gray-400',
                     'focus:bg-white'
                 )}

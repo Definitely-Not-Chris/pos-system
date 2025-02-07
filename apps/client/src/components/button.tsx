@@ -12,7 +12,7 @@ export function Button({ children, className, ...others }: ButtonProps) {
             className={clsx(
                 className, 
                 'disabled:bg-indigo-300 hover:bg-indigo-400/75 cursor-pointer',
-                'shadow text-center p-2.5 bg-indigo-400 rounded-lg font-medium text-white'
+                'shadow text-center p-3 bg-indigo-400 rounded-full font-medium text-white'
             )}
             {...others}
         >
