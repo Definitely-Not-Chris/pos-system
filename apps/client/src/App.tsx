@@ -5,6 +5,7 @@ import DashboardLayout from './pages/dashboard/layout'
 import ChangePassword from './pages/authentication/change-password'
 import Login from './pages/authentication/login'
 import Dashboard from './pages/dashboard'
+import Users from './pages/users'
 
 export default function() {
   return (
@@ -15,6 +16,7 @@ export default function() {
         </Route>
         <Route path='app' element={<DashboardLayout />}>
           <Route index element={<Dashboard />} />
+          <Route path='users' element={<Users />} />
         </Route>
       </Routes>
   )

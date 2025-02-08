@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from "react-router";
+import { Outlet, useLocation, useNavigate } from "react-router";
 import Chip from "../../components/chip";
 import routes from "./routes";
 import { startCase } from "lodash";
@@ -7,6 +7,7 @@ import { HiOutlineComputerDesktop } from "react-icons/hi2";
 
 function SideDrawer() {
     const location = useLocation();
+    const navigate = useNavigate()
 
     return (
         <div className="min-w-72 flex flex-col space-y-1 *:py-3 *:px-5 overflow-hidden bg-white rounded-r-2xl">
@@ -15,7 +16,7 @@ function SideDrawer() {
                 return (
                     <button 
                         key={route.title}
-                        // onClick={() => { alert('woooo') }}
+                        onClick={() => { navigate(route.url) }}
                         className={clsx("cursor-pointer flex flex-row space-x-4 hover:bg-blue-100", match && "bg-blue-100")}
                     >
                         <div className={clsx("p-3 flex items-center justify-center rounded-full", match ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-600")}>
