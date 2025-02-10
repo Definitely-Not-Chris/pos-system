@@ -1,8 +1,8 @@
-import Page from "../../custom-components/page";
+import Page from "../../custom-components/table-page";
 
 
 export default function () {
     return (
-        <Page title="Dashboard" />
+        <Page title="Dashboard" headers={[]} />
     )
 }

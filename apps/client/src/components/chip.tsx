@@ -6,7 +6,8 @@ export interface ChipProps extends PropsWithChildren {
     className?: string
     textClassName?: string,
     startIcon?: IconType,
-    onClick?: () => void
+    onClick?: () => void,
+    selected?: boolean
 }
 
 export default function(props: ChipProps) {
@@ -16,7 +17,8 @@ export default function(props: ChipProps) {
                 'bg-white border-2 border-white rounded-full py-2.5 px-5 flex justify-center items-center',
                 props.className,
                 props.startIcon && "!py-1 !ps-2 !pe-3",
-                props.onClick && "cursor-pointer hover:!border-blue-700/75",
+                props.onClick && "cursor-pointer hover:!border-blue-400",
+                props.selected && "!bg-white !border-blue-400"
             )}
         >
             {props.startIcon && (

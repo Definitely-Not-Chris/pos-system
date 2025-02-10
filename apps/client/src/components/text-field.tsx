@@ -12,8 +12,8 @@ export function TextField({ label, startIcon, type, containerClassName, ...other
         <div 
             className={clsx(
                 'bg-gray-100/75 border-2 border-gray-200/25 rounded-full',
-                'has-hover:border-blue-500 has-focus:border-blue-500',
-                'has-focus:bg-white flex flex-row items-center',
+                'has-hover:border-blue-200 has-focus:border-blue-500',
+                'has-focus:bg-white flex flex-row items-center overflow-hidden',
                 containerClassName
             )}
         >
@@ -24,7 +24,7 @@ export function TextField({ label, startIcon, type, containerClassName, ...other
 
                 placeholder={label} 
                 className={clsx(
-                    'flex-1 py-3 px-5.5 outline-none placeholder:text-gray-400',
+                    'flex-1 py-3 px-5.5 outline-none placeholder:text-gray-500',
                     others.className,
                     startIcon && "!ps-2.5"
                 )}
