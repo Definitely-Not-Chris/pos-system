@@ -5,7 +5,7 @@ import { DatabaseModule } from './database/database.module';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
-import configuration from './config/configuration';
+import env from '@pos/env'
 import { JwtModule } from '@nestjs/jwt';
 import { RoleModule } from './role/role.module';
 
@@ -18,7 +18,7 @@ import { RoleModule } from './role/role.module';
     JwtModule,
     RoleModule,
     ConfigModule.forRoot({
-      load: [configuration],
+      load: [() => env],
     })
   ],
   controllers: [AppController],

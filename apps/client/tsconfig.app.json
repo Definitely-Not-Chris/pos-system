@@ -20,7 +20,14 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+    "paths": {
+      "@pos/core/*": ["../../libs/core/*"],
+      "@pos/client/components/*": ["./src/components/*"],
+      "@pos/client/custom-components/*": ["./src/custom-components/*"],
+      "@pos/client/features/*": ["./src/features/*"],
+      "@pos/*": ["../../*"],
+    }
   },
   "include": ["src"]
 }

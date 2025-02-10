@@ -1,8 +1,8 @@
 import { HiOutlineChevronRight, HiOutlineChevronLeft, HiOutlineMagnifyingGlass   } from "react-icons/hi2";
-import { IconButton } from "../../components/button";
-import Page from "../../custom-components/table-page";
-import Modal from "./modal";
-import { TextField } from "../../components/text-field";
+import { IconButton } from "../../../components/button";
+import Page from "../../../custom-components/table-page";
+import Modal from "../components/modal";
+import { TextField } from "../../../components/text-field";
 
 
 export default function () {

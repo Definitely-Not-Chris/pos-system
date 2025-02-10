@@ -1,11 +1,11 @@
 import './App.css'
 import {  Route, Routes } from 'react-router'
-import AuthLayout from './pages/authentication/layout'
-import DashboardLayout from './pages/dashboard/layout'
-import ChangePassword from './pages/authentication/change-password'
-import Login from './pages/authentication/login'
-import Dashboard from './pages/dashboard'
-import Users from './pages/users'
+import AuthLayout from './features/authentication/pages/layout'
+import DashboardLayout from './features/dashboard/layout'
+import ChangePassword from './features/authentication/pages/change-password'
+import Login from './features/authentication/pages/login'
+import Dashboard from './features/dashboard/pages'
+import Users from './features/users/pages'
 
 export default function() {
   return (

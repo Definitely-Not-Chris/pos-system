@@ -1,9 +1,9 @@
 import { useState } from "react"
 import { HiOutlinePlus } from "react-icons/hi2"
-import { Button, IconButton } from "../../components/button"
-import Modal from "../../components/modal"
-import { TextField } from "../../components/text-field"
-import Chip from "../../components/chip"
+import { Button, IconButton } from "../../../components/button"
+import Modal from "../../../components/modal"
+import { TextField } from "../../../components/text-field"
+import Chip from "../../../components/chip"
 
 export default function () {
     const [open, setOpen] = useState(true)
