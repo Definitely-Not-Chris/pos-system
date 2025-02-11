@@ -18,11 +18,9 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
+   
     "paths": {
       "@pos/core/*": ["../../libs/core/dist/*"],
-      "@pos/*": ["../../*"],
     },
-    // "allowJs": true,
-    // "checkJs": true
   }
 }

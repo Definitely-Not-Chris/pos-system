@@ -8,7 +8,9 @@
   ],
   "private": true,
   "scripts": {
-    "dev": "yarn workspace @pos/core run build && yarn workspace @pos/server run dev",
-    "start": "yarn workspace @pos/core run build && yarn workspace @pos/server run start"
+    "client": "yarn workspace @pos/core run build && yarn workspace @pos/client run dev",
+    "server": "yarn workspace @pos/core run build && yarn workspace @pos/server run dev",
+    "dev": "yarn workspace @pos/core run build && yarn workspace @pos/server run dev && yarn workspace @pos/client run dev",
+    "start": "=yarn workspace @pos/core run build && yarn workspace @pos/server run start && yarn workspace @pos/client run dev"
   }
 }
