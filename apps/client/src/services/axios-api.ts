@@ -1,4 +1,5 @@
 import { AxiosInstance } from "axios";
+import { PaginationResult } from '@pos/core/types'
 
 export default class AxiosAPI<T> {
     constructor(public endpoint: string, public api: AxiosInstance) {}
@@ -7,8 +8,9 @@ export default class AxiosAPI<T> {
         return this.api.get(this.endpoint, { params })
     }
 
-    getAll(params?: any): Promise<T[] | undefined> {
-        return this.api.get(this.endpoint, { params })
+    async getAll(params?: any): Promise<PaginationResult<T> | undefined> {
+        const { data } =  await this.api.get(this.endpoint, { params }) 
+        return data
     }
 
     put(data?: any, params?: any) {

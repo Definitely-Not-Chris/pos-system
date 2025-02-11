@@ -3,9 +3,15 @@ import { IconButton } from "../../../components/button";
 import Page from "../../../custom-components/table-page";
 import Modal from "../components/modal";
 import { TextField } from "../../../components/text-field";
+import { useQuery } from "react-query";
+import usersAPI from "../../../api/users";
 
 
 export default function () {
+    const { data, isLoading } = useQuery('users', () => usersAPI.getAll())
+    const users = data?.data ?? []
+    console.log(data)
+
     return (
         <Page 
             actions={(
@@ -24,7 +30,9 @@ export default function () {
                 </>
             )}
             title="Users" 
-            headers={['#', 'Status', 'Customer', 'Cashier', 'Total Discount', 'Gross Sales', 'Net Sales', 'Date & Time']}
+            headers={['id', 'firstName', 'lastName', 'email', 'role', 'dateCreated', 'isActive']}
+            data={users}
+            loading={isLoading}
         />
     )
 }

@@ -12,7 +12,7 @@ export class UserService {
     private userRepository: Repository<UserEntity>,
   ) {}
 
-  async getAll(dto: PaginationDto): Promise<PaginationResult<UserEntity>> {
+  async getAll(dto: PaginationDto = { page: 1, pageSize: 10 }): Promise<PaginationResult<UserEntity>> {
     const [data, total] = await this.userRepository.findAndCount({ 
       skip: (dto.page - 1) * dto.pageSize,
       take: dto.page

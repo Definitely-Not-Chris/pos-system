@@ -1,24 +1,18 @@
 import axios, { InternalAxiosRequestConfig } from "axios";
-import assert from "assert";
-import TokenStorage from "../utils/token-storage";
-import env from '@pos/env'
-import { QueryClient } from "@tanstack/react-query";
+import { QueryClient } from "react-query";
+import config from "../config";
 
 
-assert(env.API_URL, "env variable not set: API_BASE_URL");
-assert(env.ENVIRONMENT, "env variable not set: ENVIRONMENT");
 
 export const queryClient = new QueryClient()
-export const tokenStorage = new TokenStorage(env.TOKEN_KEY)
-export const axiosInstance = axios.create({ baseURL: env.API_URL });
+export const axiosInstance = axios.create({ baseURL: config.API_URL });
 
-
-function authTokenInterceptor(config: InternalAxiosRequestConfig) {
-    const token = tokenStorage.get();
-    if (!token) return config;
+function authTokenInterceptor(_config: InternalAxiosRequestConfig) {
+    const token = config.tokenStorage.get();
+    if (!token) return _config;
     
-    config.headers.Authorization = `Bearer ${token}`;
-    return config;
+    _config.headers.Authorization = `Bearer ${token}`;
+    return _config;
 }
   
 axiosInstance.interceptors.request.use(authTokenInterceptor);

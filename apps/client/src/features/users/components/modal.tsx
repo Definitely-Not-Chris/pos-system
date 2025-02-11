@@ -6,7 +6,7 @@ import { TextField } from "../../../components/text-field"
 import Chip from "../../../components/chip"
 
 export default function () {
-    const [open, setOpen] = useState(true)
+    const [open, setOpen] = useState(false)
     const onToggle = () => setOpen(v => !v)
 
     return (

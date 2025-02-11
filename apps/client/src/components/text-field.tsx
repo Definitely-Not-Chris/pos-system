@@ -12,7 +12,7 @@ export function TextField({ label, startIcon, type, containerClassName, ...other
         <div 
             className={clsx(
                 'bg-gray-100/75 border-2 border-gray-200/25 rounded-full',
-                'has-hover:border-blue-200 has-focus:border-blue-500',
+                'has-hover:border-blue-400 has-focus:border-blue-500',
                 'has-focus:bg-white flex flex-row items-center overflow-hidden',
                 containerClassName
             )}
