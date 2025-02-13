@@ -13,6 +13,8 @@ export interface ChipProps extends PropsWithChildren {
 export default function(props: ChipProps) {
     return (
         <button 
+            type="button"
+            onClick={props.onClick}
             className={clsx(
                 'bg-white border-2 border-white rounded-full py-2.5 px-5 flex justify-center items-center',
                 props.className,

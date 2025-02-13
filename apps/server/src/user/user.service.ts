@@ -15,7 +15,8 @@ export class UserService {
   async getAll(dto: PaginationDto = { page: 1, pageSize: 10 }): Promise<PaginationResult<UserEntity>> {
     const [data, total] = await this.userRepository.findAndCount({ 
       skip: (dto.page - 1) * dto.pageSize,
-      take: dto.page
+      take: dto.pageSize,
+      order: { dateCreated: "desc" }
     });
 
     return { data, total, ...dto }

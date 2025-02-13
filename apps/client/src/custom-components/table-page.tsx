@@ -50,7 +50,7 @@ export default function({ title, headers, actions, data=[], loading }: PageProps
                                     const key = typeof header === "string" ? header : header.key
                                     const value = item[key]
                                     return (
-                                        <td key={key} className="py-2 text-gray-600">{String(value)}</td>
+                                        <td key={key} className="py-3 text-gray-900 border-b border-gray-100">{String(value)}</td>
                                     )
                                 })}
                             </tr>

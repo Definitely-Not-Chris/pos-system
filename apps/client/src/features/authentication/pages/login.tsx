@@ -11,8 +11,8 @@ export default function() {
             </div>
             <p className='text-gray-600 mb-6 font-medium'>Your Online Point Of Sales</p>
             <div className='w-full flex flex-col space-y-2.5'>
-                <TextField label='Enter email address'/>
-                <TextField label='Enter password' type='password'/>
+                <TextField placeholder='Enter email address'/>
+                <TextField placeholder='Enter password' type='password'/>
                 <Button>Login</Button>
             </div>
             <p className='text-gray-400 mt-4'>Forgot Password?</p>
