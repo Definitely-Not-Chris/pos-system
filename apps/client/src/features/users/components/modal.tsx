@@ -4,18 +4,23 @@ import { Button, IconButton } from "../../../components/button"
 import Modal from "../../../components/modal"
 import { FormProvider, useForm } from "react-hook-form"
 import { zodResolver } from '@hookform/resolvers/zod';
-import { RegisterUserSchema } from "@pos/core/dtos"
+import { RegisterUserDto, RegisterUserSchema } from "@pos/core/dtos"
 import RhfTextField from "../../../custom-components/rhf-text-field"
 import RhfChipSelect from "../../../custom-components/rhf-chip-select"
+import { useMutation } from "react-query"
+import users from "../../../api/users"
 
 export default function () {
     const [open, setOpen] = useState(false)
     const onToggle = () => setOpen(v => !v)
 
-    const form = useForm({
-        resolver: zodResolver(RegisterUserSchema)
-    })
+    const { mutateAsync } = useMutation(users.post)
+    const form = useForm<RegisterUserDto>({ resolver: zodResolver(RegisterUserSchema) })
     const { handleSubmit, formState: { errors } } = form
+
+    const onSubmit = (data: RegisterUserDto) => {
+        return mutateAsync(data)
+    }
 
     return (
         <FormProvider {...form}>
@@ -26,7 +31,7 @@ export default function () {
             >
                 <form 
                     className="flex flex-col space-y-2.5"
-                    onSubmit={handleSubmit((data) => alert(JSON.stringify(data)))}
+                    onSubmit={handleSubmit(onSubmit)}
                 >
                     <RhfTextField name="firstName" inputProps={{ placeholder: "First Name" }}/>
                     <RhfTextField name="lastName" inputProps={{ placeholder: "Last Name" }}/>
