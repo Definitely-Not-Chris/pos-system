@@ -1,12 +1,12 @@
-import { useState } from "react";
 import Chip from "./chip";
 import { startCase } from "lodash";
+import { FieldBaseProps } from "./types";
+import clsx from "clsx";
 
-export interface ChipSelectProps {
+export interface ChipSelectProps extends FieldBaseProps {
     options: Array<string>,
-    label?: string,
     value: string,
-    onChange: (value?: string) => void
+    onChange: (value?: string) => void,
 }
 
 export default function (props: ChipSelectProps) {
@@ -22,7 +22,7 @@ export default function (props: ChipSelectProps) {
                     <Chip 
                         selected={props.value == option} 
                         onClick={() => props.onChange(option)}
-                        className="!bg-gray-100 py-2 px-4.5"
+                        className={clsx("!bg-gray-100 py-2 px-4.5", props.error && '!border-rose-400/75 !bg-rose-50/50')}
                     >
                         {startCase(option)}
                     </Chip>

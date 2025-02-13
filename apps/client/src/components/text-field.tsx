@@ -1,11 +1,10 @@
 import clsx from "clsx"
 import { IconType } from "react-icons"
+import { FieldBaseProps } from "./types"
 
-export interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement>, FieldBaseProps {
     startIcon?: IconType,
     containerClassName?: string,
-    error?: boolean,
-    helperText?: string
 }
 
 export function TextField({ startIcon, type, containerClassName, error, helperText, ...others }: TextFieldProps) {

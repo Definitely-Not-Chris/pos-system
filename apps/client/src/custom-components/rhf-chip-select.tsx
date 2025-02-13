@@ -13,6 +13,7 @@ export default function ({ label, options, ...props }: Props) {
             {...field}
             options={options}
             label={label}
+            error={!!error}
         />
     )
 }
