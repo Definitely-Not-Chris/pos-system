@@ -8,15 +8,14 @@ import usersAPI from "../../../api/users";
 
 
 export default function () {
-    const { data, isLoading } = useQuery('users', () => usersAPI.getAll())
+    const { data, isLoading, refetch } = useQuery('users', () => usersAPI.getAll())
     const users = data?.data ?? []
-    console.log(data)
 
     return (
         <Page 
             actions={(
                 <>
-                    <Modal />
+                    <Modal onSuccess={refetch} />
                     <TextField 
                         startIcon={HiOutlineMagnifyingGlass}
                         className="!py-2.5" 

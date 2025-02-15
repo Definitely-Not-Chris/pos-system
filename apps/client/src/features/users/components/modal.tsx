@@ -10,16 +10,22 @@ import RhfChipSelect from "../../../custom-components/rhf-chip-select"
 import { useMutation } from "react-query"
 import users from "../../../api/users"
 
-export default function () {
+interface Props {
+    onSuccess: () => Promise<any>
+}
+
+export default function (props: Props) {
     const [open, setOpen] = useState(false)
     const onToggle = () => setOpen(v => !v)
 
-    const { mutateAsync } = useMutation(users.post)
+    const { mutateAsync, isLoading } = useMutation((data: RegisterUserDto) => users.post(data))
     const form = useForm<RegisterUserDto>({ resolver: zodResolver(RegisterUserSchema) })
     const { handleSubmit, formState: { errors } } = form
 
     const onSubmit = (data: RegisterUserDto) => {
-        return mutateAsync(data)
+        mutateAsync(data)
+            .then(props.onSuccess)
+            .then(() => setOpen(false))
     }
 
     return (
@@ -35,12 +41,18 @@ export default function () {
                 >
                     <RhfTextField name="firstName" inputProps={{ placeholder: "First Name" }}/>
                     <RhfTextField name="lastName" inputProps={{ placeholder: "Last Name" }}/>
-                    <RhfTextField name="email" inputProps={{ placeholder: "Email Address" }} />
+                    <RhfTextField 
+                        name="email" 
+                        inputProps={{ placeholder: "Email Address" }} 
+                        helperText={(error) => error?.type == 'invalid_string'}
+                        error={(error) => error?.type == 'invalid_string' ? 'Invalid email format' : error?.message}
+                    />
+                    <RhfTextField name="password" inputProps={{ placeholder: "Password", type: 'password' }} />
                     <RhfChipSelect name="role" label="Role: " options={['admin', 'cashier']} />
                     <div>
                         {JSON.stringify(errors)}
                     </div>
-                    <Button className="mt-6">Submit</Button>
+                    <Button loading={isLoading} className="mt-6">Submit</Button>
                 </form>
             </Modal>
             <IconButton onClick={onToggle}>
