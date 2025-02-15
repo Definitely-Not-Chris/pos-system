@@ -4,19 +4,21 @@ import { ButtonHTMLAttributes, PropsWithChildren } from "react"
 
 export interface ButtonProps extends PropsWithChildren, ButtonHTMLAttributes<HTMLButtonElement> {
     className?: string,
+    loading?: boolean
 }
 
-export function Button({ children, className, ...others }: ButtonProps) {
+export function Button({ children, className, loading, ...others }: ButtonProps) {
     return (
         <button 
+            disabled={loading}
             className={clsx(
-                'disabled:bg-blue-300 hover:bg-blue-400/75 cursor-pointer',
+                'disabled:bg-blue-200 hover:bg-blue-400/75 cursor-pointer',
                 'shadow text-center p-3 bg-blue-400 rounded-full font-medium text-white',
                 className, 
             )}
             {...others}
         >
-            {children}
+            {!loading ? children : 'Loading'}
         </button>
     )
 }

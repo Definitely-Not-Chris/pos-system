@@ -20,6 +20,7 @@ export default function (props: ChipSelectProps) {
             <div className="flex flex-row space-x-1">
                 {props.options.map((option, index) => (
                     <Chip 
+                        key={index}
                         selected={props.value == option} 
                         onClick={() => props.onChange(option)}
                         className={clsx("!bg-gray-100 py-2 px-4.5", props.error && '!border-rose-400/75 !bg-rose-50/50')}
