@@ -3,10 +3,10 @@ import { z } from 'zod';
 import { RoleEnum } from '../enums/role';
 
 export const RegisterUserSchema = z.object({
-  email: z.string(),
+  email: z.string().email(),
   firstName: z.string(),
   lastName: z.string(),
-  // password: z.string(),
+  password: z.string(),
   role: z.enum([RoleEnum.ADMIN, RoleEnum.CASHIER])
 });
 
