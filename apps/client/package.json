@@ -16,7 +16,7 @@
     "@types/lodash": "^4.17.15",
     "@types/react-icons": "^3.0.0",
     "assert": "^2.1.0",
-    "axios": "^1.7.9",
+    "axios": "^1.7.2",
     "clsx": "^2.1.1",
     "lodash": "^4.17.21",
     "normalize.css": "^8.0.1",

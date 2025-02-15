@@ -13,11 +13,11 @@ export default class AxiosAPI<T> {
         return data
     }
 
-    put(data?: any, params?: any) {
+    put<D>(data?: D, params?: any): Promise<T | undefined> {
         return this.api.put(`${this.endpoint}/edit`, data, { params })
     }
     
-    post(data?: any, params?: any) {
+    post<D>(data?: D, params?: any): Promise<T | undefined> {
         return this.api.post(this.endpoint, data, { params })
     }
 

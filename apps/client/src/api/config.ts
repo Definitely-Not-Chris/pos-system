@@ -4,8 +4,10 @@ import config from "../config";
 
 
 
-export const queryClient = new QueryClient()
-export const axiosInstance = axios.create({ baseURL: config.API_URL });
+
+export function createAxiosInstance() {
+    return axios.create({ baseURL: config.API_URL });
+}
 
 function authTokenInterceptor(_config: InternalAxiosRequestConfig) {
     const token = config.tokenStorage.get();
@@ -14,5 +16,7 @@ function authTokenInterceptor(_config: InternalAxiosRequestConfig) {
     _config.headers.Authorization = `Bearer ${token}`;
     return _config;
 }
-  
+
+export const queryClient = new QueryClient()
+const axiosInstance = createAxiosInstance()
 axiosInstance.interceptors.request.use(authTokenInterceptor);
