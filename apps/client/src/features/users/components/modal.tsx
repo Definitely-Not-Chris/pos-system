@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { HiOutlinePlus } from "react-icons/hi2"
 import { Button, IconButton } from "../../../components/button"
 import Modal from "../../../components/modal"
@@ -20,13 +20,17 @@ export default function (props: Props) {
 
     const { mutateAsync, isLoading } = useMutation((data: RegisterUserDto) => users.post(data))
     const form = useForm<RegisterUserDto>({ resolver: zodResolver(RegisterUserSchema) })
-    const { handleSubmit, formState: { errors } } = form
+    const { handleSubmit, reset, formState: { errors } } = form
 
     const onSubmit = (data: RegisterUserDto) => {
         mutateAsync(data)
             .then(props.onSuccess)
             .then(() => setOpen(false))
     }
+
+    useEffect(() => {
+        reset()
+    }, [open])
 
     return (
         <FormProvider {...form}>
@@ -49,9 +53,9 @@ export default function (props: Props) {
                     />
                     <RhfTextField name="password" inputProps={{ placeholder: "Password", type: 'password' }} />
                     <RhfChipSelect name="role" label="Role: " options={['admin', 'cashier']} />
-                    <div>
+                    {/* <div>
                         {JSON.stringify(errors)}
-                    </div>
+                    </div> */}
                     <Button loading={isLoading} className="mt-6">Submit</Button>
                 </form>
             </Modal>
