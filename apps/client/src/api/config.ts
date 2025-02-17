@@ -1,22 +1,27 @@
-import axios, { InternalAxiosRequestConfig } from "axios";
+import axios, { AxiosInstance, InternalAxiosRequestConfig } from "axios";
 import { QueryClient } from "react-query";
-import config from "../config";
+import config, { TOKEN_KEY } from "../config";
+import TokenStorage from "../utils/token-storage";
+
+const tokenStorage = new TokenStorage(TOKEN_KEY)
+export const queryClient = new QueryClient()
+
+let axiosInstance: AxiosInstance | null = null
 
 
-
-
-export function createAxiosInstance() {
-    return axios.create({ baseURL: config.API_URL });
+export function getAxiosInstance() {
+    if(axiosInstance == null)
+        axiosInstance = axios.create({ baseURL: config.API_URL });
+    return axiosInstance
 }
 
 function authTokenInterceptor(_config: InternalAxiosRequestConfig) {
-    const token = config.tokenStorage.get();
+    const token = tokenStorage.get();
     if (!token) return _config;
-    
+
     _config.headers.Authorization = `Bearer ${token}`;
     return _config;
 }
 
-export const queryClient = new QueryClient()
-const axiosInstance = createAxiosInstance()
+axiosInstance = getAxiosInstance()
 axiosInstance.interceptors.request.use(authTokenInterceptor);

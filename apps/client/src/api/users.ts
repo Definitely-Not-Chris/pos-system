@@ -1,7 +1,7 @@
-import AxiosAPI from "../services/axios-api"
+import AxiosAPI from "../services/axios-base-api"
 import { UserEntity } from '@pos/core/entities/user'
-import { createAxiosInstance } from "./config";
+import { getAxiosInstance } from "./config";
 
 export const ENDPOINT = "/v1/users"
-const api = new AxiosAPI<UserEntity>(ENDPOINT, createAxiosInstance())
+const api = new AxiosAPI<UserEntity>(ENDPOINT, getAxiosInstance())
 export default api;

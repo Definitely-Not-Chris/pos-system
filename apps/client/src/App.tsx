@@ -1,15 +1,27 @@
 import './App.css'
-import {  Route, Routes } from 'react-router'
+import {  Navigate, Route, Routes } from 'react-router'
 import AuthLayout from './features/authentication/pages/layout'
 import DashboardLayout from './features/dashboard/layout'
 import ChangePassword from './features/authentication/pages/change-password'
 import Login from './features/authentication/pages/login'
 import Dashboard from './features/dashboard/pages'
 import Users from './features/users/pages'
+import { AuthContextType, AuthContextWrapper, useAuth } from './providers/auth-provider'
 
-export default function() {
-  return (
+function MainLayout () {
+  const auth = useAuth()
+    
+  if(auth.user) {
+    return <Navigate replace to='/app' />
+  }
+
+  return <Navigate replace to='/auth/login' />
+}
+
+export default AuthContextWrapper(function() {
+    return (
       <Routes>
+        <Route path="*" element={<MainLayout />} />
         <Route path='auth' element={<AuthLayout />}>
           <Route path='login' element={<Login />} />
           <Route path='change-password' element={<ChangePassword />} />
@@ -19,5 +31,6 @@ export default function() {
           <Route path='users' element={<Users />} />
         </Route>
       </Routes>
-  )
-}
+    )
+  }
+)

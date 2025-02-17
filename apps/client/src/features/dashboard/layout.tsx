@@ -1,9 +1,10 @@
-import { Outlet, useLocation, useNavigate } from "react-router";
+import { Navigate, Outlet, useLocation, useNavigate } from "react-router";
 import Chip from "../../components/chip";
 import routes from "./routes";
 import { startCase } from "lodash";
 import clsx from "clsx";
 import { HiOutlineComputerDesktop } from "react-icons/hi2";
+import { useAuth } from "../../providers/auth-provider";
 
 function SideDrawer() {
     const location = useLocation();
@@ -58,6 +59,12 @@ function Header() {
 }
 
 export default function () {
+    const auth = useAuth()
+    
+    if(!auth.user) {
+        return <Navigate replace to='/auth/login' />
+    }
+
     return (
         <div className="bg-gray-100 h-full flex flex-col">
             <Header />

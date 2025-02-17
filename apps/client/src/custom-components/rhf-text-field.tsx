@@ -8,7 +8,7 @@ interface Props extends UseControllerProps<FieldValues, string> {
 }
 
 export default function ({ helperText, inputProps, error, ...props }: Props) {
-    const { field, fieldState: { error: FieldError } } = useController(props)
+    const { field, fieldState: { error: FieldError }, formState: { isSubmitting } } = useController(props)
 
     const showHelperText =  !helperText ? false : typeof helperText === 'boolean' ? helperText : helperText(FieldError)
     const errorMessage = error ? error(FieldError) : FieldError?.message
@@ -17,6 +17,7 @@ export default function ({ helperText, inputProps, error, ...props }: Props) {
         <TextField 
             {...field}
             {...inputProps}
+            disabled={isSubmitting}
             error={!!FieldError}
             helperText={showHelperText ? errorMessage : ''}
         />
