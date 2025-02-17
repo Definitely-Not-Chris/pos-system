@@ -4,7 +4,7 @@ import { BaseEntity } from './base';
 export abstract class PersonEntity extends BaseEntity {
   @Column({
     transformer: {
-      to: (value: string) => value.toLowerCase(),
+      to: (value: string) => value?.toLowerCase(),
       from: (value: string) => value
     }
   })
@@ -12,7 +12,7 @@ export abstract class PersonEntity extends BaseEntity {
 
   @Column({
     transformer: {
-      to: (value: string) => value.toLowerCase(),
+      to: (value: string) => value?.toLowerCase(),
       from: (value: string) => value
     }
   })
@@ -21,7 +21,7 @@ export abstract class PersonEntity extends BaseEntity {
   @Column({ 
     nullable: true,
     transformer: {
-      to: (value: string) => value.toLowerCase(),
+      to: (value?: string) => value?.toLowerCase(),
       from: (value: string) => value
     }
   })
