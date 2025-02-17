@@ -2,13 +2,29 @@ import { Column } from 'typeorm';
 import { BaseEntity } from './base';
 
 export abstract class PersonEntity extends BaseEntity {
-  @Column()
+  @Column({
+    transformer: {
+      to: (value: string) => value.toLowerCase(),
+      from: (value: string) => value
+    }
+  })
   firstName: string;
 
-  @Column()
+  @Column({
+    transformer: {
+      to: (value: string) => value.toLowerCase(),
+      from: (value: string) => value
+    }
+  })
   lastName: string;
   
-  @Column({ nullable: true })
+  @Column({ 
+    nullable: true,
+    transformer: {
+      to: (value: string) => value.toLowerCase(),
+      from: (value: string) => value
+    }
+  })
   middleName: string;
 
   // @Column('date')
