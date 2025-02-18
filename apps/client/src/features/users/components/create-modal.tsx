@@ -60,7 +60,7 @@ export default function (props: Props) {
                 </form>
             </Modal>
             <IconButton onClick={onToggle}>
-                <HiOutlinePlus className="size-4.5 text-blue-800" />
+                <HiOutlinePlus className="size-5 text-blue-600" />
             </IconButton>
         </FormProvider>
     )
