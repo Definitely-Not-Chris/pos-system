@@ -16,7 +16,7 @@ export function TextField({ startIcon, type, containerClassName, error, helperTe
                     'has-focus:bg-white flex flex-row items-center overflow-hidden',
                     containerClassName,
                     error ? 'border-rose-400/75 bg-rose-50/50' : 'has-hover:border-blue-400/50 has-focus:border-blue-500',
-                    disabled && "opacity-60 !border-blue-200" 
+                    disabled && "opacity-60 !border-white" 
                 )}
             >
                 {/* <p className='mb-0.5 font-medium text-gray-700 self-start'>{label}</p> */}

@@ -41,6 +41,7 @@ export default function(props: ChipProps = { size: 'normal' }) {
                     'font-medium text-gray-600 text-nowrap' , 
                     props.textClassName,
                     // props.size == 'small' && '!font-normal',
+                    props.selected && "!text-blue-600",
                     props.variant == 'primary' && '!text-blue-600',
                 )}
             >

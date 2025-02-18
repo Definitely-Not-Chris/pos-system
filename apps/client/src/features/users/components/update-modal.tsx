@@ -4,7 +4,7 @@ import { Button, IconButton } from "../../../components/button"
 import Modal from "../../../components/modal"
 import { FormProvider, useForm } from "react-hook-form"
 import { zodResolver } from '@hookform/resolvers/zod';
-import { RegisterUserDto, RegisterUserSchema } from "@pos/core/dtos"
+import { RegisterUserSchema, UpdateUserDto, UpdateUserSchema } from "@pos/core/dtos"
 import RhfTextField from "../../../custom-components/rhf-text-field"
 import RhfChipSelect from "../../../custom-components/rhf-chip-select"
 import { useMutation } from "react-query"
@@ -17,18 +17,19 @@ interface Props {
     defaultvalues: UserEntity
 }
 
+
 export default function (props: Props) {
     const [open, setOpen] = useState(false)
     const onToggle = () => setOpen(v => !v)
 
-    const { mutateAsync, isLoading } = useMutation((data: RegisterUserDto) => users.post(data))
-    const form = useForm<RegisterUserDto>({ 
+    const { mutateAsync, isLoading } = useMutation((data: UpdateUserDto) => users.post(data))
+    const form = useForm<UpdateUserDto>({ 
         defaultValues: omit(props.defaultvalues, 'password'),
-        resolver: zodResolver(RegisterUserSchema) 
+        resolver: zodResolver(UpdateUserSchema) 
     })
-    const { handleSubmit, reset, formState: { errors } } = form
+    const { handleSubmit, reset } = form
 
-    const onSubmit = (data: RegisterUserDto) => {
+    const onSubmit = (data: UpdateUserDto) => {
         mutateAsync(data)
             .then(props.onSuccess)
             .then(() => setOpen(false))
@@ -60,9 +61,6 @@ export default function (props: Props) {
                     />
                     <RhfTextField name="password" inputProps={{ placeholder: "Password", type: 'password' }} />
                     <RhfChipSelect name="role" label="Role: " options={['admin', 'cashier']} />
-                    {/* <div>
-                        {JSON.stringify(errors)}
-                    </div> */}
                     <Button loading={isLoading} className="mt-6">Submit</Button>
                 </form>
             </Modal>
