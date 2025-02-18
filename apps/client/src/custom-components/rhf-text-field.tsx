@@ -17,7 +17,7 @@ export default function ({ helperText, inputProps, error, ...props }: Props) {
         <TextField 
             {...field}
             {...inputProps}
-            disabled={isSubmitting}
+            disabled={isSubmitting || props.disabled}
             error={!!FieldError}
             helperText={showHelperText ? errorMessage : ''}
         />

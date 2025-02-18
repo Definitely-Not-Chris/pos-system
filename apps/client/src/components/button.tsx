@@ -27,7 +27,7 @@ export function Button({ children, className, loading, ...others }: ButtonProps)
 export function IconButton({ children, ...others }: ButtonProps) {
     return (
         <Button 
-            className="!p-3.5 !shadow-none flex items-center justify-center !bg-blue-200/50 !hover:bg-blue-50"
+            className="!p-3 !shadow-none flex items-center justify-center !bg-blue-50 !hover:bg-blue-50"
             {...others}
         >
             {children}

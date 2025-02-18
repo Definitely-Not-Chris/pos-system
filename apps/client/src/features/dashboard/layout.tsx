@@ -18,9 +18,9 @@ function SideDrawer() {
                     <button 
                         key={route.title}
                         onClick={() => { navigate(route.url) }}
-                        className={clsx("cursor-pointer flex flex-row space-x-4 hover:bg-blue-100", match && "bg-blue-100")}
+                        className={clsx("cursor-pointer flex flex-row space-x-4 hover:bg-blue-50", match && "bg-blue-50")}
                     >
-                        <div className={clsx("p-3 flex items-center justify-center rounded-full", match ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-600")}>
+                        <div className={clsx("p-3 flex items-center justify-center rounded-full", match ? "bg-blue-500 text-white" : "bg-gray-200/50 text-gray-600")}>
                             {route.renderIcon({ className: 'size-6' })}
                         </div>
                         <p className={clsx('font-medium text-nowrap self-center', match ? "text-blue-700" : "text-gray-600")}>{startCase(route.title)}</p>
