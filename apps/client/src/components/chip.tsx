@@ -24,13 +24,13 @@ export default function(props: ChipProps = { size: 'normal' }) {
                 props.onClick && "cursor-pointer hover:!border-blue-400",
                 props.selected && "!bg-white !border-blue-400",
                 props.size == 'small' && "!px-1.5 !py-0 !rounded-xl",
-                props.variant == 'primary' && '!bg-blue-50',
+                props.variant == 'primary' && '!bg-blue-100/75',
             )}
         >
             {props.startIcon && (
                 <div 
                     className={clsx(
-                        "p-2.5 flex items-center justify-center rounded-full bg-blue-50 mr-2",
+                        "p-2.5 flex items-center justify-center rounded-full bg-blue-100/75 mr-2",
                     )}
                 >
                     {props.startIcon({ className: 'size-4 text-blue-700'  })}

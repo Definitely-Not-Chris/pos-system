@@ -15,11 +15,10 @@ export function Button({ children, className, startIcon, loading, iconClassName,
         <button 
             disabled={loading}
             className={clsx(
-                'flex row items-center',
                 'disabled:bg-blue-200 hover:bg-blue-400/75 cursor-pointer',
                 'shadow text-center p-3 bg-blue-400 rounded-full font-medium text-white',
                 className, 
-                startIcon && "!pe-3.5"
+                startIcon && "!pe-3.5 flex row items-center"
             )}
             {...others}
         >
@@ -33,7 +32,7 @@ export function Button({ children, className, startIcon, loading, iconClassName,
 export function IconButton({ children, ...others }: ButtonProps) {
     return (
         <Button 
-            className="!p-3 !shadow-none flex items-center justify-center !bg-blue-50 !hover:bg-blue-50"
+            className="!p-3 !shadow-none flex items-center justify-center !bg-blue-100/75 !hover:bg-blue-100/75"
             {...others}
         >
             {children}

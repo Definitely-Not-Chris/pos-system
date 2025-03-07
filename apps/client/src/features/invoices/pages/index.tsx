@@ -1,4 +1,4 @@
-import { HiOutlineChevronRight, HiOutlineChevronLeft, HiOutlineMagnifyingGlass, HiOutlinePlus   } from "react-icons/hi2";
+import { HiOutlineChevronRight, HiOutlineChevronLeft, HiOutlineMagnifyingGlass, HiOutlinePlus, HiMiniEye  } from "react-icons/hi2";
 import { Button, IconButton } from "../../../components/button";
 import Page, { TableColumns } from "../../../custom-components/table-page";
 import CreateModal from "../components/create-modal";
@@ -39,15 +39,16 @@ export default function () {
         {
             className: "!ps-0 !w-0",
             render: (data: UserEntity) => (
-                <div className="flex row space-x-2">
+                <div className="flex row space-x-2 *:group-hover:!shadow *:!shadow-none *:!opacity-50 *:group-hover:!opacity-100">
                     <Button 
                         startIcon={HiOutlinePlus} 
-                        iconClassName="group-hover:!text-blue-700"
-                        className="!bg-white !p-0 !px-2 !rounded-lg !text-gray-400/75 !shadow-none group-hover:!text-blue-700 group-hover:!shadow"
+                        iconClassName="!text-blue-700"
+                        className="!bg-white !p-0 !px-2 !rounded-lg !text-blue-700"
                     >
                         Payment
                     </Button>
                     <UpdateModal defaultvalues={data} onSuccess={refetch} />
+                    <IconButton className="!bg-white !p-1 !rounded-lg"><HiMiniEye  className="size-5 text-gray-600"/></IconButton>
                 </div>
             )
         }
