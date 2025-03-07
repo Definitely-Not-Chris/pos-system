@@ -23,7 +23,7 @@ export default function () {
         'email', 
         {
             label: 'role',
-            render: (value: any) => <Center><Chip variant="primary" size="small">{value.role}</Chip></Center>
+            render: (value: any) => <Chip variant="primary" size="small">{value.role}</Chip>
         },
         {
             label: 'dateCreated',
@@ -43,12 +43,12 @@ export default function () {
         <Page 
             actions={(
                 <>
+                    <div className="flex-1"></div>
                     <TextField 
                         startIcon={HiOutlineMagnifyingGlass}
                         className="!py-2.5"
                         containerClassName="!rounded-2xl" 
                     />
-                    <div className="flex-1"></div>
                     <CreateModal onSuccess={refetch} />
                     <IconButton className="bg-white border !shadow-none border-gray-200">
                         <HiOutlineChevronLeft className="size-4.5 text-gray-700" />

@@ -12,11 +12,20 @@ export default function ({ helperText, inputProps, error, ...props }: Props) {
 
     const showHelperText =  !helperText ? false : typeof helperText === 'boolean' ? helperText : helperText(FieldError)
     const errorMessage = error ? error(FieldError) : FieldError?.message
+    
+    const onChange = (e: any) => {
+        let newValue = e?.target?.value
+        if(inputProps?.type == 'number')
+            newValue = Number(newValue)
+
+        return field.onChange(newValue)
+    }
 
     return (
         <TextField 
             {...field}
             {...inputProps}
+            onChange={onChange}
             disabled={isSubmitting || props.disabled}
             error={!!FieldError}
             helperText={showHelperText ? errorMessage : ''}

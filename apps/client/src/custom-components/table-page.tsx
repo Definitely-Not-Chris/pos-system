@@ -35,13 +35,13 @@ export default function({ title, columns: headers, actions, data=[], loading }: 
                 <table className="w-full rounded-xl overflow-hidden border-collapse">
                     <thead>
                         <tr className="bg-gray-100 rounded-xl">
-                            {headers.map(header => {
+                            {headers.map((header, index) => {
                                 const label = typeof header === "string" ? header : header.label || header.key
                                 return (
                                     <td 
-                                        key={label} 
+                                        key={index} 
                                         className={clsx(
-                                            "py-4 px-2 text-gray-600",
+                                            "py-4 px-2 first:ps-8 last:pe-8 text-gray-600 text-start",
                                             typeof header != "string" && header.className
                                         )}
                                     >
@@ -71,7 +71,7 @@ export default function({ title, columns: headers, actions, data=[], loading }: 
                                         <td 
                                             key={index} 
                                             className={clsx(
-                                                "py-3 border-b border-gray-100",
+                                                "py-3 px-2 first:ps-8 last:pe-8 border-b border-gray-100 text-start",
                                                 typeof header != "string" && header.className
                                             )}
                                         >

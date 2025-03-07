@@ -43,16 +43,16 @@ function Header() {
         <header className="flex space-x-3 px-3 py-3">
             <div className="flex flex-row min-w-72 space-x-3 ps-2 pe-3">
                 <div className="size-12.5 rounded-full bg-white"></div>
-                <Chip className="flex-1">Concepcion Branch</Chip>
+                <Chip className="flex-1">CODE 456-789</Chip>
             </div>
             <div className="flex-1"></div>
-            <Chip 
+            {/* <Chip 
                 startIcon={HiOutlineComputerDesktop} 
                 textClassName="!text-blue-600"
                 onClick={() => {}}
             >
                 Point of Sales
-            </Chip>
+            </Chip> */}
             <Chip>Wed, 29 May 2024</Chip>
         </header>
     )

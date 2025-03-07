@@ -6,6 +6,7 @@ import ChangePassword from './features/authentication/pages/change-password'
 import Login from './features/authentication/pages/login'
 import Dashboard from './features/dashboard/pages'
 import Users from './features/users/pages'
+import Invoices from './features/invoices/pages'
 import { AuthContextType, AuthContextWrapper, useAuth } from './providers/auth-provider'
 
 function MainLayout () {
@@ -29,6 +30,7 @@ export default AuthContextWrapper(function() {
         <Route path='app' element={<DashboardLayout />}>
           <Route index element={<Dashboard />} />
           <Route path='users' element={<Users />} />
+          <Route path='invoices' element={<Invoices />} />
         </Route>
       </Routes>
     )
