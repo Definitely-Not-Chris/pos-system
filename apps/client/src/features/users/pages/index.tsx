@@ -27,14 +27,14 @@ export default function () {
         },
         {
             label: 'dateCreated',
-            render: (value: any) => moment(value.dateCreated).format('MM-DD hh:mmA')
+            render: (value: any) => moment(value.dateCreated).format('MM-DD-YY hh:mmA')
         },
         {
             key: 'isActive',
-            render: (value: any) => 'Some text'
+            render: (value: any) => String(value.isActive)
         },
         {
-            className: "!p-0",
+            className: "!ps-0",
             render: (data: UserEntity) => <UpdateModal defaultvalues={data} onSuccess={refetch} />
         }
     ]

@@ -37,9 +37,9 @@ export default function () {
         // },
         
         {
-            className: "!ps-0 !w-0",
+            className: "!ps-0",
             render: (data: UserEntity) => (
-                <div className="flex row space-x-2 *:group-hover:!shadow *:!shadow-none *:!opacity-50 *:group-hover:!opacity-100">
+                <div className="flex row justify-end space-x-2 *:group-hover:!shadow *:!shadow-none *:!opacity-50 *:group-hover:!opacity-100">
                     <Button 
                         startIcon={HiOutlinePlus} 
                         iconClassName="!text-blue-700"

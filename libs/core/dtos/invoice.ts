@@ -11,3 +11,7 @@ export const CreateInvoiceSchema = z.object({
 });
   
 export type CreateInvoiceDto = z.infer<typeof CreateInvoiceSchema>
+
+
+export const UpdateInvoiceSchema = CreateInvoiceSchema.extend({})
+export type UpdateInvoiceDto = z.infer<typeof UpdateInvoiceSchema>

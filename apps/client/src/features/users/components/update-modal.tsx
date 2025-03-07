@@ -64,7 +64,9 @@ export default function (props: Props) {
                     <Button loading={isLoading} className="mt-6">Submit</Button>
                 </form>
             </Modal>
-            <IconButton onClick={onToggle} className="!bg-white !p-1 !rounded-lg !shadow-none group-hover:!shadow"><HiPencilSquare className="text-gray-400/75 size-5 group-hover:text-gray-600"/></IconButton>
+            <div className="flex justify-end">
+                <IconButton onClick={onToggle} className="!bg-white !p-1 !rounded-lg !shadow-none group-hover:!shadow"><HiPencilSquare className="text-gray-400/75 size-5 group-hover:text-gray-600"/></IconButton>
+            </div>
         </FormProvider>
     )
 }

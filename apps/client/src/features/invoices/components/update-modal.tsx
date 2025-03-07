@@ -1,20 +1,18 @@
 import { useEffect, useState } from "react"
-import { HiOutlinePlus, HiPencilSquare } from "react-icons/hi2"
+import { HiPencilSquare } from "react-icons/hi2"
 import { Button, IconButton } from "../../../components/button"
 import Modal from "../../../components/modal"
 import { FormProvider, useForm } from "react-hook-form"
 import { zodResolver } from '@hookform/resolvers/zod';
-import { RegisterUserSchema, UpdateUserDto, UpdateUserSchema } from "@pos/core/dtos"
+import { UpdateInvoiceDto, UpdateInvoiceSchema } from "@pos/core/dtos"
 import RhfTextField from "../../../custom-components/rhf-text-field"
-import RhfChipSelect from "../../../custom-components/rhf-chip-select"
 import { useMutation } from "react-query"
 import users from "../../../api/users"
-import { UserEntity } from "@pos/core/entities/user"
-import { omit } from "lodash"
+import { InvoiceEntity } from "@pos/core/entities"
 
 interface Props {
     onSuccess: () => Promise<any>,
-    defaultvalues: UserEntity
+    defaultvalues: InvoiceEntity
 }
 
 
@@ -22,14 +20,14 @@ export default function (props: Props) {
     const [open, setOpen] = useState(false)
     const onToggle = () => setOpen(v => !v)
 
-    const { mutateAsync, isLoading } = useMutation((data: UpdateUserDto) => users.post(data))
-    const form = useForm<UpdateUserDto>({ 
-        defaultValues: omit(props.defaultvalues, 'password'),
-        resolver: zodResolver(UpdateUserSchema) 
+    const { mutateAsync, isLoading } = useMutation((data: UpdateInvoiceDto) => users.post(data))
+    const form = useForm<UpdateInvoiceDto>({ 
+        defaultValues: props.defaultvalues,
+        resolver: zodResolver(UpdateInvoiceSchema) 
     })
     const { handleSubmit, reset } = form
 
-    const onSubmit = (data: UpdateUserDto) => {
+    const onSubmit = (data: UpdateInvoiceDto) => {
         mutateAsync(data)
             .then(props.onSuccess)
             .then(() => setOpen(false))
@@ -44,23 +42,18 @@ export default function (props: Props) {
             <Modal 
                 open={open}
                 onToggle={onToggle}
-                title="Update User"
+                title="Update Invoice"
             >
                 <form 
                     className="flex flex-col space-y-2.5"
                     onSubmit={handleSubmit(onSubmit)}
                 >
-                    <RhfTextField name="firstName" inputProps={{ placeholder: "First Name" }}/>
-                    <RhfTextField name="lastName" inputProps={{ placeholder: "Last Name" }}/>
-                    <RhfTextField 
-                        name="email" 
-                        disabled
-                        inputProps={{ placeholder: "Email Address" }} 
-                        helperText={(error) => error?.type == 'invalid_string'}
-                        error={(error) => error?.type == 'invalid_string' ? 'Invalid email format' : error?.message}
-                    />
-                    <RhfTextField name="password" inputProps={{ placeholder: "Password", type: 'password' }} />
-                    <RhfChipSelect name="role" label="Role: " options={['admin', 'cashier']} />
+                    <RhfTextField name="invoiceNumber" inputProps={{ placeholder: "Invoice Number", type: 'number' }}/>
+                    <RhfTextField name="name" inputProps={{ placeholder: "Name" }}/>
+                    <RhfTextField name="dateIssued" inputProps={{ placeholder: "Date Issued" }}/>
+                    <RhfTextField name="billTo" inputProps={{ placeholder: "Bill To" }}/>
+                    <RhfTextField name="amount" inputProps={{ placeholder: "Amount", type: 'number' }}/>
+                    <RhfTextField name="paymentDue" inputProps={{ placeholder: "Payment Due" }}/>
                     <Button loading={isLoading} className="mt-6">Submit</Button>
                 </form>
             </Modal>

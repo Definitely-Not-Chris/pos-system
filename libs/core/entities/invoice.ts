@@ -11,7 +11,7 @@ export class InvoiceEntity extends BaseEntity {
     name: string
 
     @Column()
-    dateIssued: Date
+    dateIssued: string
 
     @Column()
     billTo: string
@@ -20,5 +20,5 @@ export class InvoiceEntity extends BaseEntity {
     amount: number
 
     @Column()
-    paymentDue: Date
+    paymentDue: string
 }
