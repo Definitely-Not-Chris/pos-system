@@ -6,7 +6,7 @@ export default function () {
     const auth = useAuth()
     
     if(auth.user) {
-        return <Navigate replace to='/app' />
+        return <Navigate replace to='/app/users' />
     }
 
     return (

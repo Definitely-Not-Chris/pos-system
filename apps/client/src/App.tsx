@@ -4,16 +4,16 @@ import AuthLayout from './features/authentication/pages/layout'
 import DashboardLayout from './features/dashboard/layout'
 import ChangePassword from './features/authentication/pages/change-password'
 import Login from './features/authentication/pages/login'
-import Dashboard from './features/dashboard/pages'
 import Users from './features/users/pages'
 import Invoices from './features/invoices/pages'
-import { AuthContextType, AuthContextWrapper, useAuth } from './providers/auth-provider'
+import Checks from './features/checks/pages'
+import { AuthContextWrapper, useAuth } from './providers/auth-provider'
 
 function MainLayout () {
   const auth = useAuth()
     
   if(auth.user) {
-    return <Navigate replace to='/app' />
+    return <Navigate replace to='/app/users' />
   }
 
   return <Navigate replace to='/auth/login' />
@@ -28,9 +28,10 @@ export default AuthContextWrapper(function() {
           <Route path='change-password' element={<ChangePassword />} />
         </Route>
         <Route path='app' element={<DashboardLayout />}>
-          <Route index element={<Dashboard />} />
+          {/* <Route index element={<Dashboard />} /> */}
           <Route path='users' element={<Users />} />
           <Route path='invoices' element={<Invoices />} />
+          <Route path='checks' element={<Checks />} />
         </Route>
       </Routes>
     )

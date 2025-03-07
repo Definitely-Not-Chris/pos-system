@@ -8,7 +8,9 @@ import {
     HiOutlineArrowsRightLeft,
     HiOutlineDocumentText,
     HiOutlineDocumentMagnifyingGlass,
-    HiOutlineCog8Tooth
+    HiOutlineCog8Tooth,
+    HiOutlineBanknotes,
+    HiOutlineDocumentDuplicate
 } from "react-icons/hi2";
 
 function create(title: string, Icon?: IconType, url: string = '', component?: ReactNode) {
@@ -21,9 +23,9 @@ function create(title: string, Icon?: IconType, url: string = '', component?: Re
 }
 
 export default [
-    create('dashboard', HiOutlineHome),
+    // create('dashboard', HiOutlineHome),
     create('users',  HiOutlineUsers , '/users'),
     create('invoices', HiOutlineDocumentCurrencyDollar, '/invoices'),
-    create('cheques', HiOutlineDocumentCurrencyDollar, '/cheques'),
-    create('reports', HiOutlineCog8Tooth, '/reports'),
+    create('checks', HiOutlineBanknotes, '/checks'),
+    create('reports', HiOutlineDocumentDuplicate, '/reports'),
 ]

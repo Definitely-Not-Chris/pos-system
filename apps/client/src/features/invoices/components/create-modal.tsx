@@ -48,17 +48,7 @@ export default function (props: Props) {
                     <RhfTextField name="billTo" inputProps={{ placeholder: "Bill To" }}/>
                     <RhfTextField name="amount" inputProps={{ placeholder: "Amount", type: 'number' }}/>
                     <RhfTextField name="paymentDue" inputProps={{ placeholder: "Payment Due" }}/>
-                    {/* <RhfTextField 
-                        name="email" 
-                        inputProps={{ placeholder: "Email Address" }} 
-                        helperText={(error) => error?.type == 'invalid_string'}
-                        error={(error) => error?.type == 'invalid_string' ? 'Invalid email format' : error?.message}
-                    />
-                    <RhfTextField name="password" inputProps={{ placeholder: "Password", type: 'password' }} />
-                    <RhfChipSelect name="role" label="Role: " options={['admin', 'cashier']} /> */}
-                    {/* <div>
-                        {JSON.stringify(errors)}
-                    </div> */}
+       
                     <Button loading={isLoading} className="mt-6">Submit</Button>
                 </form>
             </Modal>

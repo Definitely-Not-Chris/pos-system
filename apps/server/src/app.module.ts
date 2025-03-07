@@ -9,6 +9,7 @@ import configuration from './config/configuration';
 import { JwtModule } from '@nestjs/jwt';
 import { RoleModule } from './role/role.module';
 import { InvoiceModule } from './invoice/invoice.module';
+import { CheckModule } from './check/check.module';
 
 
 @Module({
@@ -18,10 +19,11 @@ import { InvoiceModule } from './invoice/invoice.module';
     UserModule,
     JwtModule,
     RoleModule,
+    InvoiceModule,
+    CheckModule,
     ConfigModule.forRoot({
       load: [configuration],
     }),
-    InvoiceModule
   ],
   controllers: [AppController],
   providers: [AppService],

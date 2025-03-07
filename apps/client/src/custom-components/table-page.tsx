@@ -32,16 +32,16 @@ export default function({ title, columns: headers, actions, data=[], loading }: 
                 {actions}
             </div>
             <div className="flex-1 p-3">
-                <table className="w-full rounded-xl overflow-hidden border-collapse">
+                <table className="w-full rounded-xl overflow-hidden border-collapse table-fixed">
                     <thead>
-                        <tr className="bg-gray-100 rounded-xl">
+                        <tr className="bg-gray-200/75 rounded-xl">
                             {headers.map((header, index) => {
                                 const label = typeof header === "string" ? header : header.label || header.key
                                 return (
                                     <td 
                                         key={index} 
                                         className={clsx(
-                                            "py-4 px-2 first:ps-8 last:pe-8 text-gray-600 text-start",
+                                            "py-4 px-2 first:ps-4 last:pe-4 text-gray-900 text-start",
                                             typeof header != "string" && header.className
                                         )}
                                     >
@@ -53,7 +53,7 @@ export default function({ title, columns: headers, actions, data=[], loading }: 
                     </thead>
                     <tbody>
                         {!loading && data.map((item, index) => (
-                            <tr key={index} className="hover:bg-gray-100 group">
+                            <tr key={index} className="hover:bg-gray-200/75 group">
                                 {headers.map((header, index) => {
                                     let value = null
 
@@ -71,7 +71,7 @@ export default function({ title, columns: headers, actions, data=[], loading }: 
                                         <td 
                                             key={index} 
                                             className={clsx(
-                                                "py-3 px-2 first:ps-8 last:pe-8 border-b border-gray-100 text-start",
+                                                "py-3 px-2 first:ps-4 last:pe-4 border-b border-gray-100 text-start",
                                                 typeof header != "string" && header.className
                                             )}
                                         >
@@ -83,6 +83,12 @@ export default function({ title, columns: headers, actions, data=[], loading }: 
                         ))}
                     </tbody>
                 </table>
+            
+                {data.length == 0 && (
+                    <div className="my-8">
+                        <p className="text-md font-medium text-gray-300">No data for this module yet</p>
+                    </div>
+                )}
             </div>
         </div>
     )
