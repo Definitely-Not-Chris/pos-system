@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import configuration from './config/configuration';
 import { JwtModule } from '@nestjs/jwt';
 import { RoleModule } from './role/role.module';
+import { InvoiceModule } from './invoice/invoice.module';
 
 
 @Module({
@@ -19,7 +20,8 @@ import { RoleModule } from './role/role.module';
     RoleModule,
     ConfigModule.forRoot({
       load: [configuration],
-    })
+    }),
+    InvoiceModule
   ],
   controllers: [AppController],
   providers: [AppService],
