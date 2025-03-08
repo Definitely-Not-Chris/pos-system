@@ -3,10 +3,12 @@ import Chip from "../../components/chip";
 import routes from "./routes";
 import { startCase } from "lodash";
 import clsx from "clsx";
-import { HiOutlineComputerDesktop } from "react-icons/hi2";
+import { HiMiniArrowRightOnRectangle  } from "react-icons/hi2";
 import { useAuth } from "../../providers/auth-provider";
+import { IconButton } from "../../components/button";
 
 function SideDrawer() {
+    const { user, loading } = useAuth()
     const location = useLocation();
     const navigate = useNavigate()
 
@@ -29,11 +31,17 @@ function SideDrawer() {
             })}
             
             <div className="flex-1"></div>
-            <div className="flex flex-row space-x-4 mb-2">
-                <div className="size-12 rounded-full bg-gray-200"></div>
-                <p className='font-medium text-gray-600 text-nowrap self-center'>Juan Dela Cruz</p>
-                <div className="size-12 rounded-full bg-gray-200"></div>
-            </div>
+            {!loading && user && (
+                <div className="flex flex-row justify-between space-x-4 mb-2">
+                    {/* <div className="size-12 rounded-full bg-gray-200"></div> */}
+                    <p className='font-medium text-gray-600 text-nowrap self-center'>
+                        {startCase(`${user.firstName} ${user.firstName}`)} 
+                    </p>
+                    {/* <div className="size-12 rounded-full bg-gray-200"></div> */}
+                    <IconButton className="!shadow-none !p-3.5 !rounded-full !bg-gray-200/50"><HiMiniArrowRightOnRectangle className="size-5 text-gray-600"/></IconButton>
+                    
+                </div>
+            )}
         </div>
     )
 }
