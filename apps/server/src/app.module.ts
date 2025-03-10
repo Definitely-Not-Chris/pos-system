@@ -5,7 +5,6 @@ import { DatabaseModule } from './database/database.module';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
-import configuration from './config/configuration';
 import { JwtModule } from '@nestjs/jwt';
 import { RoleModule } from './role/role.module';
 import { InvoiceModule } from './invoice/invoice.module';
@@ -22,7 +21,12 @@ import { CheckModule } from './check/check.module';
     InvoiceModule,
     CheckModule,
     ConfigModule.forRoot({
-      load: [configuration],
+      isGlobal: true,
+      envFilePath: [
+        '.env' 
+        // process.env.NODE_ENV == "development" ? '.env.development' : '',
+        // process.env.NODE_ENV == "production" ? '.env.production' : '',
+      ]
     }),
   ],
   controllers: [AppController],
