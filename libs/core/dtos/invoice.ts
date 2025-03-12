@@ -5,7 +5,7 @@ export const CreateInvoiceSchema = z.object({
     invoiceNumber: z.number(),
     name: z.string(),
     dateIssued: z.string(),
-    billTo: z.string(),
+    companyId: z.string(),
     amount: z.number(),
     paymentDue: z.string(),
 });
