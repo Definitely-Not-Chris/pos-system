@@ -51,7 +51,7 @@ export default function (props: Props) {
                     <RhfTextField name="invoiceNumber" inputProps={{ placeholder: "Invoice Number", type: 'number' }}/>
                     <RhfTextField name="name" inputProps={{ placeholder: "Name" }}/>
                     <RhfTextField name="dateIssued" inputProps={{ placeholder: "Date Issued" }}/>
-                    <RhfTextField name="billTo" inputProps={{ placeholder: "Bill To" }}/>
+                    <RhfTextField name="company" inputProps={{ placeholder: "Bill To" }}/>
                     <RhfTextField name="amount" inputProps={{ placeholder: "Amount", type: 'number' }}/>
                     <RhfTextField name="paymentDue" inputProps={{ placeholder: "Payment Due" }}/>
                     <Button loading={isLoading} className="mt-6">Submit</Button>

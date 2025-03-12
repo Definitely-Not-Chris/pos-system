@@ -10,7 +10,7 @@ import Chip from "../../../components/chip";
 import Center from "../../../components/center";
 
 import UpdateModal from "../components/update-modal";
-import { UserEntity } from "@pos/core/entities/user";
+import { InvoiceEntity } from "@pos/core/entities";
 
 export default function () {
     const { data, isLoading, refetch } = useQuery('invoices', () => invoicesAPI.getAll())
@@ -38,14 +38,14 @@ export default function () {
         
         {
             className: "!ps-0",
-            render: (data: UserEntity) => (
+            render: (data: InvoiceEntity) => (
                 <div className="flex row justify-end space-x-2 *:group-hover:!shadow *:!shadow-none *:!opacity-50 *:group-hover:!opacity-100">
                     <Button 
                         startIcon={HiOutlinePlus} 
                         iconClassName="!text-blue-700"
                         className="!bg-white !p-0 !px-2 !rounded-lg !text-blue-700"
                     >
-                        Payment
+                        Transaction
                     </Button>
                     <UpdateModal defaultvalues={data} onSuccess={refetch} />
                     <IconButton className="!bg-white !p-1 !rounded-lg"><HiMiniEye  className="size-5 text-gray-600"/></IconButton>

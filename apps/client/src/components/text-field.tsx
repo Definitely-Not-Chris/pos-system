@@ -1,13 +1,39 @@
 import clsx from "clsx"
 import { IconType } from "react-icons"
 import { FieldBaseProps } from "./types"
+import { useEffect, useRef } from "react";
 
-export interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement>, FieldBaseProps {
+export interface TextFieldProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onFocus'>, FieldBaseProps {
     startIcon?: IconType,
     containerClassName?: string,
+    onFocus?: (focused: boolean) => void,
 }
 
-export function TextField({ startIcon, type, containerClassName, error, helperText, disabled, ...others }: TextFieldProps) {
+export function TextField({ startIcon, onFocus, type, containerClassName, error, helperText, disabled, ...others }: TextFieldProps) {
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        const handleFocus = () => {
+            onFocus && onFocus(true)
+        };
+
+        const handleBlur = () => {
+            onFocus && onFocus(false)
+        };
+      
+        const inputElement = inputRef.current;
+    
+        if (inputElement) {
+          inputElement.addEventListener('focus', handleFocus);
+          inputElement.addEventListener('blur', handleBlur);
+    
+          return () => {
+            inputElement.removeEventListener('focus', handleFocus);
+            inputElement.addEventListener('blur', handleBlur);
+          };
+        }
+    }, [])
+    
     return (
         <div className="flex flex-col">
             <div 
@@ -23,6 +49,7 @@ export function TextField({ startIcon, type, containerClassName, error, helperTe
                 {startIcon && startIcon({ className: 'ml-3.5 size-5 text-gray-400'  })}
                 <input 
                     {...others}
+                    ref={inputRef}
                     disabled={disabled}
                     className={clsx(
                         'flex-1 py-3 px-5.5 outline-none placeholder:text-gray-500 disabled:italic',

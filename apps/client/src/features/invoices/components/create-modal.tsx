@@ -8,6 +8,7 @@ import { CreateInvoiceDto, CreateInvoiceSchema } from "@pos/core/dtos"
 import RhfTextField from "../../../custom-components/rhf-text-field"
 import { useMutation } from "react-query"
 import invoices from "../../../api/invoices"
+import RhfSelectField from "../../../custom-components/rhf-select-field"
 
 interface Props {
     onSuccess: () => Promise<any>
@@ -19,7 +20,7 @@ export default function (props: Props) {
 
     const { mutateAsync, isLoading } = useMutation((data: CreateInvoiceDto) => invoices.post(data))
     const form = useForm<CreateInvoiceDto>({ resolver: zodResolver(CreateInvoiceSchema) })
-    const { handleSubmit, reset, formState: { errors } } = form
+    const { handleSubmit, reset, formState: { errors }, watch } = form
 
     const onSubmit = (data: CreateInvoiceDto) => {
         mutateAsync(data)
@@ -45,10 +46,16 @@ export default function (props: Props) {
                     <RhfTextField name="invoiceNumber" inputProps={{ placeholder: "Invoice Number", type: 'number' }}/>
                     <RhfTextField name="name" inputProps={{ placeholder: "Name" }}/>
                     <RhfTextField name="dateIssued" inputProps={{ placeholder: "Date Issued" }}/>
-                    <RhfTextField name="billTo" inputProps={{ placeholder: "Bill To" }}/>
+                    <RhfSelectField 
+                        name="companyId" 
+                        inputProps={{ 
+                            placeholder: "Bill To", 
+                            options: ['Jollibee', 'Mcdo', 'Mang Inasal'] 
+                        }}
+                    />
                     <RhfTextField name="amount" inputProps={{ placeholder: "Amount", type: 'number' }}/>
                     <RhfTextField name="paymentDue" inputProps={{ placeholder: "Payment Due" }}/>
-       
+                    {JSON.stringify(watch())}
                     <Button loading={isLoading} className="mt-6">Submit</Button>
                 </form>
             </Modal>
