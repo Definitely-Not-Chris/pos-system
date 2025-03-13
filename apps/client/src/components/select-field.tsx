@@ -48,7 +48,7 @@ export default function ({ options, renderItem, renderId, value, onChange, ...pr
                 autoComplete="off"
             />
             {inputFocused && (
-                <div ref={ref} className="overflow-hidden flex flex-col absolute top-100% left-0 mt-1.5 right-0 shadow bg-white border border-gray-50 rounded-2xl *:!px-6 *:!py-2.5">
+                <div ref={ref} className="overflow-hidden z-40 flex flex-col absolute top-100% left-0 mt-1.5 right-0 shadow bg-white border border-gray-50 rounded-2xl *:!px-6 *:!py-2.5">
                     {options
                         .filter(option => {
                             if(!inputText) return true

@@ -1,28 +1,38 @@
 import { useEffect, useState } from "react"
 import { HiOutlinePlus } from "react-icons/hi2"
-import { Button, IconButton } from "../../../components/button"
+import { Button } from "../../../components/button"
 import Modal from "../../../components/modal"
 import { FormProvider, useForm } from "react-hook-form"
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CreateInvoiceDto, CreateInvoiceSchema } from "@pos/core/dtos"
+import { CreateTransactionDto, CreateTransactionSchema } from "@pos/core/dtos"
 import RhfTextField from "../../../custom-components/rhf-text-field"
 import { useMutation } from "react-query"
-import invoices from "../../../api/invoices"
 import RhfSelectField from "../../../custom-components/rhf-select-field"
+import clsx from "clsx"
+import { InvoiceEntity } from "@pos/core/entities"
+import { TextField } from "../../../components/text-field"
+import transactions from "../../../api/transactions"
 
 interface Props {
-    onSuccess: () => Promise<any>
+    onSuccess: () => Promise<any>,
+    buttonClassname?: string,
+    invoice: InvoiceEntity
 }
 
 export default function (props: Props) {
     const [open, setOpen] = useState(false)
     const onToggle = () => setOpen(v => !v)
 
-    const { mutateAsync, isLoading } = useMutation((data: CreateInvoiceDto) => invoices.post(data))
-    const form = useForm<CreateInvoiceDto>({ resolver: zodResolver(CreateInvoiceSchema) })
+    const { mutateAsync, isLoading } = useMutation((data: CreateTransactionDto) => transactions.post(data))
+    const form = useForm<CreateTransactionDto>({ 
+        resolver: zodResolver(CreateTransactionSchema),
+        defaultValues: {
+            invoiceId: props.invoice.id
+        }
+    })
     const { handleSubmit, reset, formState: { errors }, watch } = form
 
-    const onSubmit = (data: CreateInvoiceDto) => {
+    const onSubmit = (data: CreateTransactionDto) => {
         mutateAsync(data)
             .then(props.onSuccess)
             .then(() => setOpen(false))
@@ -37,31 +47,35 @@ export default function (props: Props) {
             <Modal 
                 open={open}
                 onToggle={onToggle}
-                title="Create Invoice"
+                title="Add Transaction"
             >
                 <form 
                     className="flex flex-col space-y-2.5"
                     onSubmit={handleSubmit(onSubmit)}
                 >
-                    <RhfTextField name="invoiceNumber" inputProps={{ placeholder: "Invoice Number", type: 'number' }}/>
                     <RhfTextField name="name" inputProps={{ placeholder: "Name" }}/>
-                    <RhfTextField name="dateIssued" inputProps={{ placeholder: "Date Issued" }}/>
                     <RhfSelectField 
-                        name="companyId" 
+                        name="type" 
                         inputProps={{ 
-                            placeholder: "Bill To", 
-                            options: ['Jollibee', 'Mcdo', 'Mang Inasal'] 
+                            placeholder: "Type", 
+                            options: ['Payment', 'Delivery Receipt'] 
                         }}
                     />
+                    <TextField value={`Invoice #${props.invoice.invoiceNumber}`} disabled/>
+                    <RhfTextField name="date" inputProps={{ placeholder: "Date" }}/>
                     <RhfTextField name="amount" inputProps={{ placeholder: "Amount", type: 'number' }}/>
-                    <RhfTextField name="paymentDue" inputProps={{ placeholder: "Payment Due" }}/>
-                    {JSON.stringify(watch())}
+                    {/* {JSON.stringify(watch())} */}
                     <Button loading={isLoading} className="mt-6">Submit</Button>
                 </form>
             </Modal>
-            <IconButton onClick={onToggle}>
-                <HiOutlinePlus className="size-5 text-blue-600" />
-            </IconButton>
+            <Button 
+                onClick={onToggle}
+                startIcon={HiOutlinePlus} 
+                iconClassName="!text-blue-700"
+                className={clsx(props.buttonClassname, '!bg-white !p-0 !px-2 !rounded-lg !text-blue-700')}
+            >
+                Transaction
+            </Button>
         </FormProvider>
     )
 }

@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne } from "typeorm";
+import { AfterLoad, Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, OneToOne } from "typeorm";
 import { BaseEntity } from "./base";
 import { TransactionEntity } from "./transaction";
 import { CompanyEntity } from "./company";
@@ -16,16 +16,22 @@ export class InvoiceEntity extends BaseEntity {
     dateIssued: string
 
     @Column()
-    amount: number
-
-    @Column()
     paymentDue: string
 
     @OneToOne(() => CompanyEntity)
     @JoinColumn()
     company: CompanyEntity
 
-    @ManyToMany(() => TransactionEntity)
-    @JoinTable()
+    amount: number = 0
+
+    @OneToMany(() => TransactionEntity, (transactions) => transactions.invoice)
+    @JoinTable({ name: "InvoiceTransactions" })
     transactions: TransactionEntity[]
+
+    @AfterLoad()
+    calculateTotalAmount() {
+      if (this.transactions && this.transactions.length > 0) {
+        this.amount = this.transactions.reduce((c, p) => c + p.amount, 0)
+      }
+    }
 }

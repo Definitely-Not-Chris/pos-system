@@ -1,4 +1,4 @@
-import { Column, Entity, JoinTable, ManyToMany } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne } from "typeorm";
 import { BaseEntity } from "./base";
 import { InvoiceEntity } from "./invoice";
 
@@ -12,12 +12,12 @@ export class TransactionEntity extends BaseEntity {
     date: string
 
     @Column()
-    payee: string
+    type: string
 
     @Column()
     amount: number
 
-    @ManyToMany(() => InvoiceEntity)
+    @ManyToOne(() => InvoiceEntity, (invoice) => invoice.transactions)
     @JoinTable()
-    invoices: InvoiceEntity[]
+    invoice: InvoiceEntity
 }

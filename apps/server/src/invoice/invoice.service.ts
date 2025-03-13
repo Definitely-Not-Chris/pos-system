@@ -16,7 +16,15 @@ export class InvoiceService {
     const [data, total] = await this.repository.findAndCount({ 
       skip: (dto.page - 1) * dto.pageSize,
       take: dto.pageSize,
-      order: { dateCreated: "desc" }
+      relations: {
+        transactions: true
+      },
+      order: { 
+        dateCreated: "desc",
+        transactions: {
+          dateCreated: "desc"
+        }
+      },
     });
 
     return { data, total, ...dto }

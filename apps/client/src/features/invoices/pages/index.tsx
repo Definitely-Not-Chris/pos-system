@@ -1,7 +1,7 @@
 import { HiOutlineChevronRight, HiOutlineChevronLeft, HiOutlineMagnifyingGlass, HiOutlinePlus, HiMiniEye  } from "react-icons/hi2";
 import { Button, IconButton } from "../../../components/button";
-import Page, { TableColumns } from "../../../custom-components/table-page";
-import CreateModal from "../components/create-modal";
+import Page from "../../../custom-components/table-page";
+import CreateModal from "../components/create-invoice-modal";
 import { TextField } from "../../../components/text-field";
 import { useQuery } from "react-query";
 import invoicesAPI from "../../../api/invoices";
@@ -9,19 +9,19 @@ import moment from "moment";
 import Chip from "../../../components/chip";
 import Center from "../../../components/center";
 
-import UpdateModal from "../components/update-modal";
+import UpdateModal from "../components/update-invoice-modal";
 import { InvoiceEntity } from "@pos/core/entities";
+import AddTransactionModal from "../components/add-transaction-modal";
+import { useNavigate } from "react-router";
+import { TableColumns } from "../../../components/table";
 
 export default function () {
+    const navigate = useNavigate()
     const { data, isLoading, refetch } = useQuery('invoices', () => invoicesAPI.getAll())
     const invoices = data?.data ?? []
 
     const columns: TableColumns = [
-        {
-            key: 'invoiceNumber',
-            label: 'Invoice #',
-            render: (value: any) => value.invoiceNumber
-        },
+        'invoiceNumber',
         'name',
         'dateIssued',
         'billTo',
@@ -37,18 +37,12 @@ export default function () {
         // },
         
         {
-            className: "!ps-0",
+            className: "!ps-0 !w-20%",
             render: (data: InvoiceEntity) => (
                 <div className="flex row justify-end space-x-2 *:group-hover:!shadow *:!shadow-none *:!opacity-50 *:group-hover:!opacity-100">
-                    <Button 
-                        startIcon={HiOutlinePlus} 
-                        iconClassName="!text-blue-700"
-                        className="!bg-white !p-0 !px-2 !rounded-lg !text-blue-700"
-                    >
-                        Transaction
-                    </Button>
+                    <AddTransactionModal invoice={data} onSuccess={refetch} />
                     <UpdateModal defaultvalues={data} onSuccess={refetch} />
-                    <IconButton className="!bg-white !p-1 !rounded-lg"><HiMiniEye  className="size-5 text-gray-600"/></IconButton>
+                    <IconButton onClick={() => navigate(data.id.toString())} className="!bg-white !p-1 !rounded-lg"><HiMiniEye  className="size-5 text-gray-600"/></IconButton>
                 </div>
             )
         }

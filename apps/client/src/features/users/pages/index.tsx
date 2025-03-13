@@ -1,6 +1,6 @@
 import { HiOutlineChevronRight, HiOutlineChevronLeft, HiOutlineMagnifyingGlass   } from "react-icons/hi2";
 import { IconButton } from "../../../components/button";
-import Page, { TableColumns } from "../../../custom-components/table-page";
+import Page from "../../../custom-components/table-page";
 import CreateModal from "../components/create-modal";
 import { TextField } from "../../../components/text-field";
 import { useQuery } from "react-query";
@@ -11,6 +11,7 @@ import Center from "../../../components/center";
 
 import UpdateModal from "../components/update-modal";
 import { UserEntity } from "@pos/core/entities/user";
+import { TableColumns } from "../../../components/table";
 
 export default function () {
     const { data, isLoading, refetch } = useQuery('users', () => usersAPI.getAll())

@@ -9,6 +9,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { RoleModule } from './role/role.module';
 import { InvoiceModule } from './invoice/invoice.module';
 import { CheckModule } from './check/check.module';
+import { TransactionModule } from './transaction/transaction.module';
 
 
 @Module({
@@ -20,6 +21,7 @@ import { CheckModule } from './check/check.module';
     RoleModule,
     InvoiceModule,
     CheckModule,
+    TransactionModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: [
