@@ -1,55 +1,37 @@
 import { HiOutlineChevronRight, HiOutlineChevronLeft, HiOutlineMagnifyingGlass, HiMiniEye  } from "react-icons/hi2";
 import { IconButton } from "../../../components/button";
 import Page from "../../../custom-components/table-page";
-import CreateModal from "../components/create-invoice-modal";
+import CreateModal from "../components/create-modal";
 import { TextField } from "../../../components/text-field";
 import { useQuery } from "react-query";
-import invoicesAPI from "../../../api/invoices";
+import companiesAPI from "../../../api/companies";
 
-import UpdateModal from "../components/update-invoice-modal";
-import { InvoiceEntity } from "@pos/core/entities";
-import AddTransactionModal from "../../../custom-components/add-transaction-modal";
-import { useNavigate } from "react-router";
+import UpdateModal from "../components/update-modal";
+import { CheckEntity } from "@pos/core/entities";
 import { TableColumns } from "../../../components/table";
 
 export default function () {
-    const navigate = useNavigate()
-    const { data, isLoading, refetch } = useQuery('invoices', () => invoicesAPI.getAll())
-    const invoices = data?.data ?? []
+    const { data, isLoading, refetch } = useQuery('companies', () => companiesAPI.getAll())
+    const checks = data?.data ?? []
 
     const columns: TableColumns = [
-        'invoiceNumber',
+        'id',
         'name',
-        {
-            label: 'company',
-            render: (data: InvoiceEntity) => data.company.name
-        },
-        {
-            label: 'amount',
-            render: (data: InvoiceEntity) => data.amount.toFixed(2)
-        },
-        {
-            label: 'balance',
-            render: (data: InvoiceEntity) => data.totalBalance.toFixed(2)
-        },
-        'dateIssued',
-        'paymentDue',
-        // {
-        //     label: 'role',
-        //     render: (value: any) => <Center><Chip variant="primary" size="small">{value.role}</Chip></Center>
-        // },
-        // {
-        //     label: 'dateCreated',
-        //     render: (value: any) => moment(value.dateCreated).format('MM-DD hh:mmA')
-        // },
-        
+        'address',
+        'contactNumber',
         {
             className: "!ps-0",
-            render: (data: InvoiceEntity) => (
+            render: (data: CheckEntity) => (
                 <div className="flex row justify-end space-x-2 *:group-hover:!shadow *:!shadow-none *:!opacity-50 *:group-hover:!opacity-100">
-                    <AddTransactionModal invoice={data} onSuccess={refetch} />
+                    {/* <Button 
+                        startIcon={HiOutlinePlus} 
+                        iconClassName="!text-blue-700"
+                        className="!bg-white !p-0 !px-2 !rounded-lg !text-blue-700"
+                    >
+                        Payment
+                    </Button> */}
                     <UpdateModal defaultvalues={data} onSuccess={refetch} />
-                    <IconButton onClick={() => navigate(data.id.toString())} className="!bg-white !p-1 !rounded-lg"><HiMiniEye  className="size-5 text-gray-600"/></IconButton>
+                    <IconButton className="!bg-white !p-1 !rounded-lg"><HiMiniEye  className="size-5 text-gray-600"/></IconButton>
                 </div>
             )
         }
@@ -74,9 +56,9 @@ export default function () {
                     </IconButton>
                 </>
             )}
-            title="Invoices" 
+            title="Companies" 
             columns={columns}
-            data={invoices}
+            data={checks}
             loading={isLoading}
         />
     )

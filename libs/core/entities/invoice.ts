@@ -1,4 +1,4 @@
-import { AfterLoad, Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, OneToOne } from "typeorm";
+import { AfterLoad, Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne } from "typeorm";
 import { BaseEntity } from "./base";
 import { TransactionEntity } from "./transaction";
 import { CompanyEntity } from "./company";
@@ -18,20 +18,24 @@ export class InvoiceEntity extends BaseEntity {
     @Column()
     paymentDue: string
 
-    @OneToOne(() => CompanyEntity)
+    @Column()
+    amount: number
+
+    @ManyToOne(() => CompanyEntity, (company) => company.invoices)
     @JoinColumn()
     company: CompanyEntity
 
-    amount: number = 0
+    totalBalance: number = 0
 
-    @OneToMany(() => TransactionEntity, (transactions) => transactions.invoice)
+    @ManyToMany(() => TransactionEntity, (transactions) => transactions.invoices)
     @JoinTable({ name: "InvoiceTransactions" })
     transactions: TransactionEntity[]
 
     @AfterLoad()
     calculateTotalAmount() {
       if (this.transactions && this.transactions.length > 0) {
-        this.amount = this.transactions.reduce((c, p) => c + p.amount, 0)
+        this.totalBalance = this.transactions.filter(item => item.type == 'Payment').reduce((c, p) => c + p.amount, 0)
+        this.totalBalance = this.amount - this.totalBalance
       }
     }
 }

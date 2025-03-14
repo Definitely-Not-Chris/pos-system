@@ -9,7 +9,7 @@ export interface ChipProps extends PropsWithChildren {
     onClick?: () => void,
     selected?: boolean,
     size?: 'small' | 'normal',
-    variant?: 'primary' | 'secondary'
+    variant?: 'primary' | 'secondary' | 'gray'
 }
 
 export default function(props: ChipProps = { size: 'normal' }) {
@@ -25,6 +25,8 @@ export default function(props: ChipProps = { size: 'normal' }) {
                 props.selected && "!bg-white !border-blue-400",
                 props.size == 'small' && "!px-1.5 !py-0 !rounded-xl",
                 props.variant == 'primary' && '!bg-blue-100/75',
+                props.variant == 'secondary' && '!bg-green-100/75',
+                props.variant == 'gray' && '!bg-gray-100/75',
             )}
         >
             {props.startIcon && (
@@ -43,6 +45,8 @@ export default function(props: ChipProps = { size: 'normal' }) {
                     // props.size == 'small' && '!font-normal',
                     props.selected && "!text-blue-600",
                     props.variant == 'primary' && '!text-blue-600',
+                    props.variant == 'secondary' && '!text-green-600',
+                    props.variant == 'gray' && '!text-gray-600',
                 )}
             >
                 {props.children}

@@ -14,7 +14,7 @@ export default function({ title, actions, ...others }: PageProps) {
 
     return (
         <div className="flex-1 *:rounded-2xl *:bg-white flex flex-col space-y-1.5 overflow-hidden">
-            <div className="flex flex-row items-center justify-between p-3 space-x-2">
+            <div className="flex flex-row items-center justify-between p-3 space-x-2 min-h-18">
                 <h1 className="font-medium ms-2 text-gray-600">{title}</h1>
                 <div className="flex-1"></div>
                 {actions}

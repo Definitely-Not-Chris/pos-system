@@ -1,12 +1,13 @@
 import { z } from "zod";
+import { CompanySchema } from "./company";
 
 
 export const CreateInvoiceSchema = z.object({
-    invoiceNumber: z.number(),
+    invoiceNumber: z.number().positive(),
     name: z.string(),
     dateIssued: z.string(),
-    companyId: z.string(),
-    amount: z.number(),
+    amount: z.number().positive(),
+    company: CompanySchema,
     paymentDue: z.string(),
 });
   

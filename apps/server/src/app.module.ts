@@ -10,6 +10,7 @@ import { RoleModule } from './role/role.module';
 import { InvoiceModule } from './invoice/invoice.module';
 import { CheckModule } from './check/check.module';
 import { TransactionModule } from './transaction/transaction.module';
+import { CompanyModule } from './company/company.module';
 
 
 @Module({
@@ -22,6 +23,7 @@ import { TransactionModule } from './transaction/transaction.module';
     InvoiceModule,
     CheckModule,
     TransactionModule,
+    CompanyModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: [

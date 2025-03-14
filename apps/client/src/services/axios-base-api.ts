@@ -4,9 +4,9 @@ import { PaginationResult } from '@pos/core/types'
 export default class AxiosAPI<T> {
     constructor(public endpoint: string, public api: AxiosInstance) {}
 
-    async getOne(params?: any): Promise<T | undefined> {
-        const { data } = await this.api.get(this.endpoint, { params })
-        return data?.data?.[0]
+    async getOne(id: any, params?: any): Promise<T | undefined> {
+        const { data } = await this.api.get(this.endpoint + `/${id}`, { params })
+        return data
     }
 
     async getAll(params?: any): Promise<PaginationResult<T> | undefined> {

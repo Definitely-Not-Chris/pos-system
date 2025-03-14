@@ -2,8 +2,6 @@ import { z } from "zod";
 
 
 export const CreateTransactionSchema = z.object({
-    name: z.string(),
-    date: z.string(),
     type: z.string(),
     amount: z.number(),
     invoiceId: z.number(),

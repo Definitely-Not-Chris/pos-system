@@ -5,11 +5,12 @@ import { useEffect, useRef } from "react";
 
 export interface TextFieldProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onFocus'>, FieldBaseProps {
     startIcon?: IconType,
+    endIcon?: IconType,
     containerClassName?: string,
     onFocus?: (focused: boolean) => void,
 }
 
-export function TextField({ startIcon, onFocus, type, containerClassName, error, helperText, disabled, ...others }: TextFieldProps) {
+export function TextField({ startIcon, endIcon, onFocus, type, containerClassName, error, helperText, disabled, ...others }: TextFieldProps) {
     const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
@@ -58,6 +59,7 @@ export function TextField({ startIcon, onFocus, type, containerClassName, error,
                     )}
                     type={type}
                 />
+                {endIcon && endIcon({ className: 'mr-3.5 size-5 text-gray-400'  })}
             </div>
             {error && helperText && <p className={clsx("self-start ms-4 mt-1 text-sm", error ? 'text-rose-500' : 'text-gray-300')}>{helperText}</p>}
         </div>

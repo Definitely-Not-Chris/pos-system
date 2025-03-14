@@ -1,16 +1,14 @@
-import { HiOutlineChevronRight, HiOutlineChevronLeft, HiOutlineMagnifyingGlass, HiOutlinePlus, HiMiniEye  } from "react-icons/hi2";
-import { Button, IconButton } from "../../../components/button";
-import Page, { TableColumns } from "../../../custom-components/table-page";
+import { HiOutlineChevronRight, HiOutlineChevronLeft, HiOutlineMagnifyingGlass, HiMiniEye  } from "react-icons/hi2";
+import { IconButton } from "../../../components/button";
+import Page from "../../../custom-components/table-page";
 import CreateModal from "../components/create-modal";
 import { TextField } from "../../../components/text-field";
 import { useQuery } from "react-query";
 import checksAPI from "../../../api/checks";
-import moment from "moment";
-import Chip from "../../../components/chip";
-import Center from "../../../components/center";
 
 import UpdateModal from "../components/update-modal";
 import { CheckEntity } from "@pos/core/entities";
+import { TableColumns } from "../../../components/table";
 
 export default function () {
     const { data, isLoading, refetch } = useQuery('checks', () => checksAPI.getAll())

@@ -8,6 +8,9 @@ import Users from './features/users/pages'
 import Invoices from './features/invoices/pages'
 import Invoice from './features/invoices/pages/detail'
 import Checks from './features/checks/pages'
+import Companies from './features/companies/pages'
+import BillingStatements from './features/billing-statements/pages'
+import BillingStatement from './features/billing-statements/pages/detail'
 import { AuthContextWrapper, useAuth } from './providers/auth-provider'
 
 function MainLayout () {
@@ -31,11 +34,16 @@ export default AuthContextWrapper(function() {
         <Route path='app' element={<DashboardLayout />}>
           {/* <Route index element={<Dashboard />} /> */}
           <Route path='users' element={<Users />} />
+          <Route path='billing-statements'>
+            <Route index element={<BillingStatements />} />
+            <Route path=':id' element={<BillingStatement />} />
+          </Route>
           <Route path='invoices'>
             <Route index element={<Invoices />} />
             <Route path=':id' element={<Invoice />} />
           </Route>
           <Route path='checks' element={<Checks />} />
+          <Route path='companies' element={<Companies />} />
         </Route>
       </Routes>
     )

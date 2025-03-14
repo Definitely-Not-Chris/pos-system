@@ -4,12 +4,10 @@ import { Button, IconButton } from "../../../components/button"
 import Modal from "../../../components/modal"
 import { FormProvider, useForm } from "react-hook-form"
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CreateInvoiceDto, CreateInvoiceSchema } from "@pos/core/dtos"
+import { CreateCompanyDto, CreateCompanySchema } from "@pos/core/dtos"
 import RhfTextField from "../../../custom-components/rhf-text-field"
 import { useMutation } from "react-query"
-import invoices from "../../../api/invoices"
-import RhfSelectField from "../../../custom-components/rhf-select-field"
-import CompanyField from "./company-field"
+import companies from "../../../api/companies"
 
 interface Props {
     onSuccess: () => Promise<any>
@@ -19,11 +17,11 @@ export default function (props: Props) {
     const [open, setOpen] = useState(false)
     const onToggle = () => setOpen(v => !v)
 
-    const { mutateAsync, isLoading } = useMutation((data: CreateInvoiceDto) => invoices.post(data))
-    const form = useForm<CreateInvoiceDto>({ resolver: zodResolver(CreateInvoiceSchema) })
-    const { handleSubmit, reset, formState: { errors }, watch } = form
+    const { mutateAsync, isLoading } = useMutation((data: CreateCompanyDto) => companies.post(data))
+    const form = useForm<CreateCompanyDto>({ resolver: zodResolver(CreateCompanySchema) })
+    const { handleSubmit, reset, formState: { errors } } = form
 
-    const onSubmit = (data: CreateInvoiceDto) => {
+    const onSubmit = (data: CreateCompanyDto) => {
         mutateAsync(data)
             .then(props.onSuccess)
             .then(() => setOpen(false))
@@ -38,20 +36,26 @@ export default function (props: Props) {
             <Modal 
                 open={open}
                 onToggle={onToggle}
-                title="Create Invoice"
+                title="Create Company"
             >
                 <form 
                     className="flex flex-col space-y-2.5"
                     onSubmit={handleSubmit(onSubmit)}
                 >
-                    <RhfTextField name="invoiceNumber" inputProps={{ placeholder: "Invoice Number", type: 'number' }}/>
                     <RhfTextField name="name" inputProps={{ placeholder: "Name" }}/>
-                    <RhfTextField name="amount" inputProps={{ placeholder: "Amount", type: 'number' }}/>
-                    <CompanyField />
-                    <RhfTextField name="dateIssued" inputProps={{ placeholder: "Date Issued" }}/>
-                    <RhfTextField name="paymentDue" inputProps={{ placeholder: "Payment Due" }}/>
-                    {/* {JSON.stringify(watch())} */}
-                    {/* {JSON.stringify(errors)} */}
+                    <RhfTextField name="address" inputProps={{ placeholder: "Address" }}/>
+                    <RhfTextField name="contactNumber" inputProps={{ placeholder: "Contact Number" }}/>
+                    {/* <RhfTextField 
+                        name="email" 
+                        inputProps={{ placeholder: "Email Address" }} 
+                        helperText={(error) => error?.type == 'invalid_string'}
+                        error={(error) => error?.type == 'invalid_string' ? 'Invalid email format' : error?.message}
+                    />
+                    <RhfTextField name="password" inputProps={{ placeholder: "Password", type: 'password' }} />
+                    <RhfChipSelect name="role" label="Role: " options={['admin', 'cashier']} /> */}
+                    {/* <div>
+                        {JSON.stringify(errors)}
+                    </div> */}
                     <Button loading={isLoading} className="mt-6">Submit</Button>
                 </form>
             </Modal>

@@ -17,17 +17,23 @@ export interface TableProps {
     columns: TableColumns,
     data?: Array<any>,
     loading?: boolean,
-    className?: string
+    className?: string,
+    lastRow?: ReactNode
 }
 
 
-export default function({ className, columns: headers, data=[], loading }: TableProps) {
+export const tableStyles = {
+    tableRow: "hover:bg-gray-100 group",
+    tableData: "py-3 px-2 first:ps-4 last:pe-4 border-b border-gray-100 text-start"
+}
+
+export default function({ className, lastRow, columns: headers, data=[], loading }: TableProps) {
 
     return (
         <div className={clsx(className)}>
             <table className="w-full rounded-xl overflow-hidden border-collapse table-fixed">
                 <thead>
-                    <tr className="bg-gray-200/75 rounded-xl">
+                    <tr className="bg-gray-100 rounded-xl">
                         {headers.map((header, index) => {
                             const label = typeof header === "string" ? header : header.label || header.key
                             return (
@@ -46,7 +52,7 @@ export default function({ className, columns: headers, data=[], loading }: Table
                 </thead>
                 <tbody>
                     {!loading && data.map((item, index) => (
-                        <tr key={index} className="hover:bg-gray-200/75 group">
+                        <tr key={index} className="hover:bg-gray-100 group">
                             {headers.map((header, index) => {
                                 let value = null
 
@@ -74,6 +80,7 @@ export default function({ className, columns: headers, data=[], loading }: Table
                             })}
                         </tr>
                     ))}
+                    {lastRow}
                 </tbody>
             </table>
         

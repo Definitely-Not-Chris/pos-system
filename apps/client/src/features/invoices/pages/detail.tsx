@@ -1,11 +1,14 @@
 import { useParams } from "react-router";
-import AddTransactionModal from "../components/add-transaction-modal";
+import AddTransactionModal from "../../../custom-components/add-transaction-modal";
 import { useQuery } from "react-query";
 import invoicesAPI from "../../../api/invoices";
-import { omit, pick, startCase } from "lodash";
+import { lowerCase } from "lodash";
 import Table, { TableColumns } from "../../../components/table";
 import Chip from "../../../components/chip";
 import { TransactionEntity } from "@pos/core/entities/transaction";
+import { IconButton } from "../../../components/button";
+import { HiMiniTrash } from "react-icons/hi2";
+import Field from "../../../custom-components/field";
 
 
 
@@ -14,20 +17,30 @@ export default function () {
 
     const { data: invoice, isLoading, refetch } = useQuery({
         queryKey: ['invoice', id],
-        queryFn: () => invoicesAPI.getOne({ id })
+        queryFn: () => invoicesAPI.getOne(id)
     })
-    
+
+    console.log(invoice)
 
     const columns: TableColumns = [
         'id',
-        'name',
         {
             label: 'type',
-            render: (data: TransactionEntity) => <Chip variant="primary" size="small">{data.type}</Chip>
+            render: (data: TransactionEntity) => <Chip variant="secondary" size="small">{lowerCase(data.type)}</Chip>
         },
-        'date',
-        'amount',
-        'dateCreated'
+        {
+            label: 'amount',
+            render: (data: TransactionEntity) => data.amount.toFixed(2)
+        },
+        'dateCreated',
+        {
+            className: "!ps-0",
+            render: (data: TransactionEntity) => (
+                <div className="flex row justify-end space-x-2 *:group-hover:!shadow *:!shadow-none *:!opacity-50 *:group-hover:!opacity-100">
+                    <IconButton onClick={() => {}} className="!bg-white !p-1 !rounded-lg"><HiMiniTrash  className="size-5 text-gray-600"/></IconButton>
+                </div>
+            )
+        }
     ]
 
     if(isLoading || !invoice) return 'Loading...'
@@ -48,21 +61,16 @@ export default function () {
                     </div>
                 </header>
                 <div className="grid grid-cols-4 gap-6">
-                    {Object.entries(pick(invoice, ['name', 'dateIssued', 'paymentDue', 'dateCreated', 'dateUpdated']))
-                        .map(([key, value]) => (
-                            <div key={key} className="flex flex-col text-start leading-5">
-                                <p className="font-medium ">{startCase(key)}</p>
-                                <p className="">{value as any}</p>
-                            </div>
-                        ))
-                    }
-                    <div className="flex flex-col text-start leading-5">
-                        <p className="font-medium ">Total Amount</p>
-                        <p>{invoice.amount}</p>
-                    </div>
+                    <Field label="name" value={invoice.name}/>
+                    <Field label="company" value={invoice.company.name}/>
+                    <Field label="amount" value={invoice.amount.toFixed(2)}/>
+                    <Field label="balance" value={invoice.totalBalance.toFixed(2)}/>
+                    <Field label="dateIssued" value={invoice.dateIssued}/>
+                    <Field label="paymentDue" value={invoice.paymentDue}/>
+                    <Field label="dateCreated" value={invoice.dateCreated}/>
                 </div>
             </div>
-            <div className="flex-1 p-6">
+            <div className=" p-6">
                 <p className="font-medium mb-3 text-start">Transactions</p>
                 <Table 
                     columns={columns}
