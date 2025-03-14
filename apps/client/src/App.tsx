@@ -8,6 +8,7 @@ import Users from './features/users/pages'
 import Invoices from './features/invoices/pages'
 import Invoice from './features/invoices/pages/detail'
 import Checks from './features/checks/pages'
+import Transactions from './features/transactions/pages'
 import Companies from './features/companies/pages'
 import BillingStatements from './features/billing-statements/pages'
 import BillingStatement from './features/billing-statements/pages/detail'
@@ -42,6 +43,7 @@ export default AuthContextWrapper(function() {
             <Route index element={<Invoices />} />
             <Route path=':id' element={<Invoice />} />
           </Route>
+          <Route path='transactions' element={<Transactions />} />
           <Route path='checks' element={<Checks />} />
           <Route path='companies' element={<Companies />} />
         </Route>

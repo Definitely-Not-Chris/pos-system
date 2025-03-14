@@ -11,6 +11,7 @@ import { InvoiceModule } from './invoice/invoice.module';
 import { CheckModule } from './check/check.module';
 import { TransactionModule } from './transaction/transaction.module';
 import { CompanyModule } from './company/company.module';
+import { BillingStatementModule } from './billing-statement/billing-statement.module';
 
 
 @Module({
@@ -24,6 +25,7 @@ import { CompanyModule } from './company/company.module';
     CheckModule,
     TransactionModule,
     CompanyModule,
+    BillingStatementModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: [

@@ -85,6 +85,10 @@ export default function () {
                 lastRow={(
                     <>
                         <tr className={clsx(tableStyles.tableRow, '!bg-gray-100')}>
+                            <td className={clsx(tableStyles.tableData, '!text-end !font-medium')} colSpan={4}>Total Amount: </td>
+                            <td className={clsx(tableStyles.tableData, '!text-end !font-medium')}>{company.totalAmount.toFixed(2)}</td>
+                        </tr>
+                        <tr className={clsx(tableStyles.tableRow, '!bg-gray-100')}>
                             <td className={clsx(tableStyles.tableData, '!text-end !font-medium')} colSpan={4}>Total Balance: </td>
                             <td className={clsx(tableStyles.tableData, '!text-end !font-medium')}>{company.totalBalance.toFixed(2)}</td>
                         </tr>

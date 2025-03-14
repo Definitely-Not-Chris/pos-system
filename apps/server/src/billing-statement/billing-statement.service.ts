@@ -1,37 +1,43 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateCompanyDto, GetAllBillingStatementQuery } from '@pos/core/dtos';
-import { InvoiceEntity } from '@pos/core/entities';
+import { CompanyEntity, InvoiceEntity } from '@pos/core/entities';
 import { PaginationResult } from '@pos/core/types';
-import { Between, FindOptionsWhere, Repository } from 'typeorm';
+import { Between, Equal, FindOptionsWhere, Repository } from 'typeorm';
 
 @Injectable()
 export class BillingStatementService {
   constructor(
     @InjectRepository(InvoiceEntity)
-    private repository: Repository<InvoiceEntity>,
+    private invoiceRepository: Repository<InvoiceEntity>,
+    
+    @InjectRepository(CompanyEntity)
+    private companyRepository: Repository<CompanyEntity>,
   ) {}
 
-  async getAll(query: GetAllBillingStatementQuery = { page: 1, pageSize: 10 }): Promise<PaginationResult<InvoiceEntity>> {
-    const [data, total] = await this.repository.findAndCount({ 
+  async getAll(query: GetAllBillingStatementQuery): Promise<PaginationResult<CompanyEntity>> {
+    query.page = query.page ?? 1
+    query.pageSize = query.pageSize ?? 10
+
+    let [companies, total] = await this.companyRepository.findAndCount({ 
       skip: (query.page - 1) * query.pageSize,
       take: query.pageSize,
-      where: {
-        dateCreated: Between(query.startDate, query.endDate)
-      },
       relations: {
-        transactions: true
+        invoices: {
+          transactions: true
+        }
       },
       order: { 
         dateCreated: "desc",
       },
     });
 
-    return { data, total, ...query }
+    companies = companies.filter(company => company.totalBalance > 0)
+    return { data: companies, total, ...query }
   }
 
    getOne(query: FindOptionsWhere<InvoiceEntity>): Promise<InvoiceEntity | null> {
-      return this.repository.findOne({
+      return this.invoiceRepository.findOne({
         where: query,
         relations: {
           transactions: true,
@@ -46,11 +52,11 @@ export class BillingStatementService {
     }
   
   async remove(id: number): Promise<void> {
-    await this.repository.delete(id);
+    await this.invoiceRepository.delete(id);
   }
 
   async create(dto: CreateCompanyDto) {
-    const transaction = this.repository.create(dto)
+    const transaction = this.invoiceRepository.create(dto)
     return await transaction.save()
   }
 }

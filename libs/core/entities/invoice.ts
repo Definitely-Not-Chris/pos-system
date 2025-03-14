@@ -27,15 +27,16 @@ export class InvoiceEntity extends BaseEntity {
 
     totalBalance: number = 0
 
-    @ManyToMany(() => TransactionEntity, (transactions) => transactions.invoices)
-    @JoinTable({ name: "InvoiceTransactions" })
+    @OneToMany(() => TransactionEntity, (transactions) => transactions.invoice)
+    @JoinColumn()
     transactions: TransactionEntity[]
 
     @AfterLoad()
     calculateTotalAmount() {
       if (this.transactions && this.transactions.length > 0) {
         this.totalBalance = this.transactions.filter(item => item.type == 'Payment').reduce((c, p) => c + p.amount, 0)
-        this.totalBalance = this.amount - this.totalBalance
       }
+      this.totalBalance = this.amount - this.totalBalance
+
     }
 }

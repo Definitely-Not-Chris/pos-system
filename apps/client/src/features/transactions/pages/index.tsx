@@ -4,24 +4,32 @@ import Page from "../../../custom-components/table-page";
 import CreateModal from "../components/create-modal";
 import { TextField } from "../../../components/text-field";
 import { useQuery } from "react-query";
-import companiesAPI from "../../../api/companies";
+import transactionsAPI from "../../../api/transactions";
 
 import UpdateModal from "../components/update-modal";
-import { CheckEntity } from "@pos/core/entities";
+import { CheckEntity, TransactionEntity } from "@pos/core/entities";
 import { TableColumns } from "../../../components/table";
 
 export default function () {
-    const { data, isLoading, refetch } = useQuery('companies', () => companiesAPI.getAll())
-    const checks = data?.data ?? []
+    const { data, isLoading, refetch } = useQuery('transactions', () => transactionsAPI.getAll())
+    const transactions = data?.data ?? []
 
     const columns: TableColumns = [
         'id',
-        'name',
-        'address',
-        'contactNumber',
+        {
+            label: "Company",
+            render: (data: TransactionEntity) => data.invoice.company.name,
+        },
+        {
+            label: "invoice Number",
+            render: (data: TransactionEntity) => data.invoice.invoiceNumber,
+        },
+        'type',
+        'amount',
+        'dateCreated',
         {
             className: "!ps-0",
-            render: (data: CheckEntity) => (
+            render: (data: TransactionEntity) => (
                 <div className="flex row justify-end space-x-2 *:group-hover:!shadow *:!shadow-none *:!opacity-50 *:group-hover:!opacity-100">
                     {/* <Button 
                         startIcon={HiOutlinePlus} 
@@ -30,7 +38,7 @@ export default function () {
                     >
                         Payment
                     </Button> */}
-                    <UpdateModal defaultvalues={data} onSuccess={refetch} />
+                    {/* <UpdateModal defaultvalues={data} onSuccess={refetch} /> */}
                     <IconButton className="!bg-white !p-1 !rounded-lg"><HiMiniEye  className="size-5 text-gray-600"/></IconButton>
                 </div>
             )
@@ -56,9 +64,9 @@ export default function () {
                     </IconButton>
                 </>
             )}
-            title="Companies" 
+            title="Transactions" 
             columns={columns}
-            data={checks}
+            data={transactions}
             loading={isLoading}
         />
     )

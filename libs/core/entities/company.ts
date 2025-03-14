@@ -21,9 +21,18 @@ export class CompanyEntity extends BaseEntity {
     totalBalance: number = 0
 
     @AfterLoad()
-    calculateTotalAmount() {
+    calculateTotalBalancet() {
         if (this.invoices && this.invoices.length > 0) {
             this.totalBalance = this.invoices.reduce((c, p) => c + p.totalBalance, 0)
+        }
+    }
+    
+    totalAmount: number = 0
+
+    @AfterLoad()
+    calculateTotalAmount() {
+        if (this.invoices && this.invoices.length > 0) {
+            this.totalAmount = this.invoices.reduce((c, p) => c + p.amount, 0)
         }
     }
 }

@@ -21,7 +21,9 @@ export class TransactionService {
       skip: (dto.page - 1) * dto.pageSize,
       take: dto.pageSize,
       relations: {
-        invoices: true
+        invoice: {
+          company: true
+        }
       },
       order: { 
         dateCreated: "desc",
