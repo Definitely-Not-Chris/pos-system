@@ -6,15 +6,19 @@ import clsx from "clsx";
 import { HiMiniArrowRightOnRectangle  } from "react-icons/hi2";
 import { useAuth } from "../../providers/auth-provider";
 import { IconButton } from "../../components/button";
+import { UserEntity } from "@pos/core/entities";
 
 function SideDrawer() {
-    const { user, loading } = useAuth()
+    const { user } = useAuth()
     const location = useLocation();
     const navigate = useNavigate()
 
     return (
         <div className="min-w-72 flex flex-col space-y-1 *:py-3 *:px-5 overflow-hidden bg-white rounded-r-2xl">
             {routes.map(route => {
+                if(!route.isAuthorized(user as UserEntity))
+                    return null
+
                 const match = location.pathname == route.url
                 return (
                     <button 
@@ -31,11 +35,11 @@ function SideDrawer() {
             })}
             
             <div className="flex-1"></div>
-            {!loading && user && (
+            {user && (
                 <div className="flex flex-row justify-between space-x-4 mb-2">
                     {/* <div className="size-12 rounded-full bg-gray-200"></div> */}
                     <p className='font-medium text-gray-600 text-nowrap self-center'>
-                        {startCase(`${user.firstName} ${user.firstName}`)} 
+                        {startCase(`${user.firstName} ${user.lastName}`)} 
                     </p>
                     {/* <div className="size-12 rounded-full bg-gray-200"></div> */}
                     <IconButton className="!shadow-none !p-3.5 !rounded-full !bg-gray-200/50"><HiMiniArrowRightOnRectangle className="size-5 text-gray-600"/></IconButton>
@@ -67,12 +71,6 @@ function Header() {
 }
 
 export default function () {
-    const auth = useAuth()
-    
-    if(!auth.user) {
-        return <Navigate replace to='/auth/login' />
-    }
-
     return (
         <div className="bg-gray-100 h-full flex flex-col">
             <Header />

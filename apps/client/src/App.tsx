@@ -1,5 +1,5 @@
 import './App.css'
-import {  Navigate, Route, Routes } from 'react-router'
+import {  Navigate, Outlet, Route, RouteObject, Routes, useRoutes } from 'react-router'
 import AuthLayout from './features/authentication/pages/layout'
 import DashboardLayout from './features/dashboard/layout'
 import ChangePassword from './features/authentication/pages/change-password'
@@ -13,41 +13,71 @@ import Companies from './features/companies/pages'
 import BillingStatements from './features/billing-statements/pages'
 import BillingStatement from './features/billing-statements/pages/detail'
 import { AuthContextWrapper, useAuth } from './providers/auth-provider'
+import { RoleEnum } from '@pos/core/enums/role'
 
-function MainLayout () {
+function NotFoundRedirect () {
   const auth = useAuth()
     
-  if(auth.user) {
-    return <Navigate replace to='/app/users' />
-  }
-
-  return <Navigate replace to='/auth/login' />
+  return <Navigate replace to={auth.redirect} />
 }
 
+function ProtectRoute(routes: RouteObject[], roles: RoleEnum[] = []) {
+  const auth = useAuth()
+
+  if(!auth.user) return []
+  if(auth.user.role == RoleEnum.ADMIN) return routes
+  if(roles.length > 0 && !roles.includes(auth.user.role)) return []
+
+  return routes
+}
+
+
 export default AuthContextWrapper(function() {
-    return (
-      <Routes>
-        <Route path="*" element={<MainLayout />} />
-        <Route path='auth' element={<AuthLayout />}>
-          <Route path='login' element={<Login />} />
-          <Route path='change-password' element={<ChangePassword />} />
-        </Route>
-        <Route path='app' element={<DashboardLayout />}>
-          {/* <Route index element={<Dashboard />} /> */}
-          <Route path='users' element={<Users />} />
-          <Route path='billing-statements'>
-            <Route index element={<BillingStatements />} />
-            <Route path=':id' element={<BillingStatement />} />
-          </Route>
-          <Route path='invoices'>
-            <Route index element={<Invoices />} />
-            <Route path=':id' element={<Invoice />} />
-          </Route>
-          <Route path='transactions' element={<Transactions />} />
-          <Route path='checks' element={<Checks />} />
-          <Route path='companies' element={<Companies />} />
-        </Route>
-      </Routes>
-    )
-  }
-)
+  const element = useRoutes([
+    {
+      path: 'auth',
+      element: <AuthLayout />,
+      children: [
+        { path: 'login', element: <Login /> },
+        { path: 'change-password', element: <ChangePassword /> },
+      ]
+    },
+    ...ProtectRoute([
+      {
+        path: 'app',
+        element: <DashboardLayout />,
+        children: [
+          ...ProtectRoute([ { path: 'users', element: <Users /> } ]),
+          ...ProtectRoute([
+            { path: 'transactions', element: <Transactions /> },
+            { path: 'checks', element: <Checks /> }
+          ], [RoleEnum.INVOICE, RoleEnum.PAYMENT]),
+          ...ProtectRoute([
+            { 
+              path: 'billing-statements', 
+              children: [
+                { index: true, element: <BillingStatements /> },
+                { path: ':id', element: <BillingStatement /> }
+              ]
+            },
+            { 
+              path: 'invoices', 
+              children: [
+                { index: true, element: <Invoices /> },
+                { path: ':id', element: <Invoice /> }
+              ]
+            },
+            { path: 'companies', element: <Companies /> }
+          ], [RoleEnum.INVOICE]),
+        ]
+      }
+    ]),
+
+    {
+      path: '*',
+      element: <NotFoundRedirect />,
+    },
+  ])
+
+  return element    
+})

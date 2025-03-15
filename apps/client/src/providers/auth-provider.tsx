@@ -4,16 +4,20 @@ import { TOKEN_KEY } from "../config";
 import auth from "../api/auth";
 import { SignInUserDto } from "@pos/core/dtos";
 import TokenStorage from "../utils/token-storage";
+import { RoleEnum } from "@pos/core/enums/role";
+import routes from "../features/dashboard/routes";
 
 export type AuthContextType = {
     user?: UserEntity,
     loading: boolean,
-    login: (dto: SignInUserDto) => Promise<void>
+    login: (dto: SignInUserDto) => Promise<void>,
+    redirect: string
 }
 
 const AuthContext = createContext<AuthContextType>({
     loading: false,
-    login: () => Promise.resolve()
+    login: () => Promise.resolve(),
+    redirect: ''
 })
 const tokenStorage = new TokenStorage(TOKEN_KEY)
 let counter = 0;
@@ -52,9 +56,13 @@ export const AuthContextWrapper = (Element: () => ReactNode) => () => {
         setUser(user)
     }
 
+    const loginPath = "/auth/login"
+    const authorizedRoutes = routes.filter(route => route.isAuthorized(user))
+    const redirect = user ? authorizedRoutes[0].url : loginPath
+
     return (
         <AuthContext.Provider 
-            value={{ user, loading, login }}
+            value={{ user, loading, login, redirect }}
         >
             {<Element />}
         </AuthContext.Provider>
