@@ -10,7 +10,7 @@ export interface CardProps extends PropsWithChildren, React.HtmlHTMLAttributes<H
 export function Card({ children, className, ...others }: CardProps) {
     return (
         <div 
-            className={clsx('rounded-2xl bg-white border border-gray-200/75 w-full shadow-xs p-14', className)}
+            className={clsx('rounded-2xl bg-white border border-gray-200/75 w-full shadow-xs px-4 py-6 sm:p-14', className)}
             {...others}
         >
             {children}

@@ -53,7 +53,7 @@ export function TextField({ startIcon, endIcon, onFocus, type, containerClassNam
                     ref={inputRef}
                     disabled={disabled}
                     className={clsx(
-                        'flex-1 py-3 px-5.5 outline-none placeholder:text-gray-500 disabled:italic',
+                        'flex-1 py-3 px-5.5 w-full sm:w-auto outline-none placeholder:text-gray-500 disabled:italic',
                         others.className,
                         startIcon && "!ps-2.5"
                     )}

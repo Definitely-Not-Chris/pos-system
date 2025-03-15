@@ -23,7 +23,7 @@ export interface TableProps {
 
 
 export const tableStyles = {
-    tableRow: "hover:bg-gray-100 group",
+    tableRow: "hover:bg-gray-100 group table-column sm:table-row",
     tableData: "py-3 px-2 first:ps-4 last:pe-4 border-b border-gray-100 text-start"
 }
 

@@ -14,7 +14,7 @@ function SideDrawer() {
     const navigate = useNavigate()
 
     return (
-        <div className="min-w-72 flex flex-col space-y-1 *:py-3 *:px-5 overflow-hidden bg-white rounded-r-2xl">
+        <div className="min-w-72 hidden sm:flex flex-col space-y-1 *:py-3 *:px-5 overflow-hidden bg-white rounded-r-2xl">
             {routes.map(route => {
                 if(!route.isAuthorized(user as UserEntity))
                     return null
@@ -52,12 +52,11 @@ function SideDrawer() {
 
 function Header() {
     return (
-        <header className="flex space-x-3 px-3 py-3">
-            <div className="flex flex-row min-w-72 space-x-3 ps-2 pe-3">
+        <header className="space-x-3 px-3 py-3 flex justify-between">
+            <div className="flex flex-row sm:min-w-72 space-x-3 ps-2 pe-3 m-0">
                 <div className="size-12.5 rounded-full bg-white"></div>
                 <Chip className="flex-1">CODE 456-789</Chip>
             </div>
-            <div className="flex-1"></div>
             {/* <Chip 
                 startIcon={HiOutlineComputerDesktop} 
                 textClassName="!text-blue-600"
@@ -72,7 +71,7 @@ function Header() {
 
 export default function () {
     return (
-        <div className="bg-gray-100 h-full flex flex-col">
+        <div className="bg-gray-100 h-full flex flex-col overflow-x-hidden">
             <Header />
             <div className="flex-1 flex flex-row">
                 <SideDrawer />
