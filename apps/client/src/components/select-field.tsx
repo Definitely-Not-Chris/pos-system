@@ -64,8 +64,9 @@ export default function ({ options, renderItem, renderId, value, onChange, ...pr
             {inputFocused && (
                 <div ref={ref} className="overflow-hidden z-40 flex flex-col absolute top-100% left-0 mt-1.5 right-0 shadow bg-white border border-gray-50 rounded-2xl *:!px-6 *:!py-2.5">
                     {filteredOptions
-                        .map(option => (
+                        .map((option, index) => (
                             <Button 
+                                key={index}
                                 className="!shadow-none hover:!bg-blue-100/75 !bg-transparent !rounded-none !text-gray-600 !text-start !font-normal" 
                                 type="button" 
                                 onClick={(e) => { 

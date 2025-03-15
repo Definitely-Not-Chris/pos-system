@@ -1,10 +1,11 @@
 import { z } from "zod";
+import { InvoiceSchema } from "./invoice";
 
 
 export const CreateTransactionSchema = z.object({
     type: z.string(),
     amount: z.number(),
-    invoiceId: z.number(),
+    invoice: InvoiceSchema,
 });
   
 export type CreateTransactionDto = z.infer<typeof CreateTransactionSchema>

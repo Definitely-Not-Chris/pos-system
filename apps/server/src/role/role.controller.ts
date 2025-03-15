@@ -9,6 +9,6 @@ export class RoleController {
 
     @Get()
     getAllRole(): string[] {
-        return [RoleEnum.ADMIN, RoleEnum.CASHIER];
+        return [RoleEnum.ADMIN, RoleEnum.INVOICE, RoleEnum.PAYMENT];
     }
 }

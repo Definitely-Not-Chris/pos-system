@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react"
 import { HiOutlinePlus } from "react-icons/hi2"
-import { Button } from "../components/button"
-import Modal from "../components/modal"
+import { Button } from "../../../components/button"
+import Modal from "../../../components/modal"
 import { FormProvider, useForm } from "react-hook-form"
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CreateTransactionDto, CreateTransactionSchema } from "@pos/core/dtos"
-import RhfTextField from "./rhf-text-field"
+import RhfTextField from "../../../custom-components/rhf-text-field"
 import { useMutation } from "react-query"
-import RhfSelectField from "./rhf-select-field"
+import RhfSelectField from "../../../custom-components/rhf-select-field"
 import clsx from "clsx"
 import { InvoiceEntity } from "@pos/core/entities"
-import { TextField } from "../components/text-field"
-import transactions from "../api/transactions"
+import { TextField } from "../../../components/text-field"
+import transactions from "../../../api/transactions"
 
 interface Props {
     onSuccess: () => Promise<any>,
@@ -27,7 +27,7 @@ export default function (props: Props) {
     const form = useForm<CreateTransactionDto>({ 
         resolver: zodResolver(CreateTransactionSchema),
         defaultValues: {
-            invoiceId: props.invoice.id
+            invoice: props.invoice
         }
     })
     const { handleSubmit, reset, formState: { errors }, watch } = form

@@ -1,5 +1,7 @@
 
 export enum RoleEnum {
     ADMIN = "admin",
-    CASHIER = "cashier",
+    // CASHIER = "cashier",
+    INVOICE = "invoice",
+    PAYMENT = "payment"
 }

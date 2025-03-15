@@ -7,7 +7,7 @@ export const RegisterUserSchema = z.object({
   firstName: z.string(),
   lastName: z.string(),
   password: z.string(),
-  role: z.enum([RoleEnum.ADMIN, RoleEnum.CASHIER])
+  role: z.enum([RoleEnum.ADMIN, RoleEnum.INVOICE, RoleEnum.PAYMENT])
 });
 
 export type RegisterUserDto = z.infer<typeof RegisterUserSchema>

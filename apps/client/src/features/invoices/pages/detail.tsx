@@ -1,5 +1,5 @@
 import { useParams } from "react-router";
-import AddTransactionModal from "../../../custom-components/add-transaction-modal";
+import AddTransactionModal from "../components/add-transaction-modal";
 import { useQuery } from "react-query";
 import invoicesAPI from "../../../api/invoices";
 import { lowerCase } from "lodash";
@@ -9,6 +9,7 @@ import { TransactionEntity } from "@pos/core/entities/transaction";
 import { IconButton } from "../../../components/button";
 import { HiMiniTrash } from "react-icons/hi2";
 import Field from "../../../custom-components/field";
+import PaymentType from "../../../custom-components/payment-type";
 
 
 
@@ -26,21 +27,21 @@ export default function () {
         'id',
         {
             label: 'type',
-            render: (data: TransactionEntity) => <Chip variant="secondary" size="small">{lowerCase(data.type)}</Chip>
+            render: (data: TransactionEntity) => <PaymentType {...data} />
         },
         {
             label: 'amount',
             render: (data: TransactionEntity) => data.amount.toFixed(2)
         },
         'dateCreated',
-        {
-            className: "!ps-0",
-            render: (data: TransactionEntity) => (
-                <div className="flex row justify-end space-x-2 *:group-hover:!shadow *:!shadow-none *:!opacity-50 *:group-hover:!opacity-100">
-                    <IconButton onClick={() => {}} className="!bg-white !p-1 !rounded-lg"><HiMiniTrash  className="size-5 text-gray-600"/></IconButton>
-                </div>
-            )
-        }
+        // {
+        //     className: "!ps-0",
+        //     render: (data: TransactionEntity) => (
+        //         <div className="flex row justify-end space-x-2 *:group-hover:!shadow *:!shadow-none *:!opacity-50 *:group-hover:!opacity-100">
+        //             <IconButton onClick={() => {}} className="!bg-white !p-1 !rounded-lg"><HiMiniTrash  className="size-5 text-gray-600"/></IconButton>
+        //         </div>
+        //     )
+        // }
     ]
 
     if(isLoading || !invoice) return 'Loading...'

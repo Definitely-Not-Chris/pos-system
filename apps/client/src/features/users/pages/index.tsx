@@ -28,12 +28,9 @@ export default function () {
         },
         {
             label: 'dateCreated',
-            render: (value: any) => moment(value.dateCreated).format('MM-DD-YY hh:mmA')
+            render: (value: any) => moment(value.dateCreated).format('MM-DD-YYYY hh:mm A')
         },
-        {
-            key: 'isActive',
-            render: (value: any) => String(value.isActive)
-        },
+    
         {
             className: "!ps-0",
             render: (data: UserEntity) => <UpdateModal defaultvalues={data} onSuccess={refetch} />
@@ -48,7 +45,6 @@ export default function () {
                     <TextField 
                         startIcon={HiOutlineMagnifyingGlass}
                         className="!py-2.5"
-                        containerClassName="!rounded-2xl" 
                     />
                     <CreateModal onSuccess={refetch} />
                     <IconButton className="bg-white border !shadow-none border-gray-200">

@@ -52,7 +52,7 @@ export default function (props: Props) {
                         error={(error) => error?.type == 'invalid_string' ? 'Invalid email format' : error?.message}
                     />
                     <RhfTextField name="password" inputProps={{ placeholder: "Password", type: 'password' }} />
-                    <RhfChipSelect name="role" label="Role: " options={['admin', 'cashier']} />
+                    <RhfChipSelect name="role" label="Role: " options={['admin', 'invoice', 'payment']} />
                     {/* <div>
                         {JSON.stringify(errors)}
                     </div> */}

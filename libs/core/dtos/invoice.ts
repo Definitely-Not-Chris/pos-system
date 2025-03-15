@@ -10,6 +10,10 @@ export const CreateInvoiceSchema = z.object({
     company: CompanySchema,
     paymentDue: z.string(),
 });
+
+export const InvoiceSchema = CreateInvoiceSchema.extend({
+    id: z.number().positive()
+})
   
 export type CreateInvoiceDto = z.infer<typeof CreateInvoiceSchema>
 

@@ -4,24 +4,31 @@ import { Button, IconButton } from "../../../components/button"
 import Modal from "../../../components/modal"
 import { FormProvider, useForm } from "react-hook-form"
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CreateCompanyDto, CreateCompanySchema } from "@pos/core/dtos"
+import { CreateTransactionDto, CreateTransactionSchema } from "@pos/core/dtos"
 import RhfTextField from "../../../custom-components/rhf-text-field"
 import { useMutation } from "react-query"
-import companies from "../../../api/companies"
+import RhfSelectField from "../../../custom-components/rhf-select-field"
+import clsx from "clsx"
+import { TextField } from "../../../components/text-field"
+import transactions from "../../../api/transactions"
+import InvoiceField from "./invoice-field"
 
 interface Props {
-    onSuccess: () => Promise<any>
+    onSuccess: () => Promise<any>,
+    buttonClassname?: string,
 }
 
 export default function (props: Props) {
     const [open, setOpen] = useState(false)
     const onToggle = () => setOpen(v => !v)
 
-    const { mutateAsync, isLoading } = useMutation((data: CreateCompanyDto) => companies.post(data))
-    const form = useForm<CreateCompanyDto>({ resolver: zodResolver(CreateCompanySchema) })
-    const { handleSubmit, reset, formState: { errors } } = form
+    const { mutateAsync, isLoading } = useMutation((data: CreateTransactionDto) => transactions.post(data))
+    const form = useForm<CreateTransactionDto>({ 
+        resolver: zodResolver(CreateTransactionSchema),
+    })
+    const { handleSubmit, reset, formState: { errors }, watch } = form
 
-    const onSubmit = (data: CreateCompanyDto) => {
+    const onSubmit = (data: CreateTransactionDto) => {
         mutateAsync(data)
             .then(props.onSuccess)
             .then(() => setOpen(false))
@@ -36,26 +43,21 @@ export default function (props: Props) {
             <Modal 
                 open={open}
                 onToggle={onToggle}
-                title="Create Company"
+                title="Add Transaction"
             >
                 <form 
                     className="flex flex-col space-y-2.5"
                     onSubmit={handleSubmit(onSubmit)}
                 >
-                    <RhfTextField name="name" inputProps={{ placeholder: "Name" }}/>
-                    <RhfTextField name="address" inputProps={{ placeholder: "Address" }}/>
-                    <RhfTextField name="contactNumber" inputProps={{ placeholder: "Contact Number" }}/>
-                    {/* <RhfTextField 
-                        name="email" 
-                        inputProps={{ placeholder: "Email Address" }} 
-                        helperText={(error) => error?.type == 'invalid_string'}
-                        error={(error) => error?.type == 'invalid_string' ? 'Invalid email format' : error?.message}
+                    <InvoiceField />
+                    <RhfSelectField 
+                        name="type" 
+                        inputProps={{ 
+                            placeholder: "Type", 
+                            options: ['Payment', 'Delivery Receipt'] 
+                        }}
                     />
-                    <RhfTextField name="password" inputProps={{ placeholder: "Password", type: 'password' }} />
-                    <RhfChipSelect name="role" label="Role: " options={['admin', 'cashier']} /> */}
-                    {/* <div>
-                        {JSON.stringify(errors)}
-                    </div> */}
+                    <RhfTextField name="amount" inputProps={{ placeholder: "Amount", type: 'number' }}/>
                     <Button loading={isLoading} className="mt-6">Submit</Button>
                 </form>
             </Modal>

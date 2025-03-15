@@ -10,6 +10,7 @@ import { TableColumns } from "../../../components/table";
 import UpdateModal from "../components/update-modal";
 import Chip from "../../../components/chip";
 import { TextField } from "../../../components/text-field";
+import InvoiceStatus from "../../../custom-components/invoice-status";
 
 export default function () {
     const navigate = useNavigate()
@@ -24,8 +25,8 @@ export default function () {
             render: (data: CompanyEntity) => data.name
         },
         {
-            label: 'totalInvoice',
-            render: (data: CompanyEntity) => data.invoices.length
+            label: 'Status',
+            render: (data: CompanyEntity) => <InvoiceStatus amount={data.totalAmount} totalBalance={data.totalBalance}/>
         },
         {
             label: 'totalAmount',
@@ -36,8 +37,8 @@ export default function () {
             render: (data: CompanyEntity) => data.totalBalance.toFixed(2)
         },
         {
-            label: 'Status',
-            render: (data: CompanyEntity) => <Chip variant={data.totalBalance <= 0 ? 'secondary' : 'primary'} size="small">{data.totalBalance <= 0 ? 'paid' : 'unpaid'}</Chip>
+            label: 'totalInvoice',
+            render: (data: CompanyEntity) => data.invoices.length
         },
         {
             className: "!ps-0",
@@ -57,7 +58,6 @@ export default function () {
                     <TextField 
                         startIcon={HiOutlineMagnifyingGlass}
                         className="!py-2.5"
-                        containerClassName="!rounded-2xl" 
                     />
                     <IconButton className="bg-white border !shadow-none border-gray-200">
                         <HiOutlineChevronLeft className="size-4.5 text-gray-700" />

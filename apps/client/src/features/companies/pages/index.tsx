@@ -45,7 +45,6 @@ export default function () {
                     <TextField 
                         startIcon={HiOutlineMagnifyingGlass}
                         className="!py-2.5"
-                        containerClassName="!rounded-2xl" 
                     />
                     <CreateModal onSuccess={refetch} />
                     <IconButton className="bg-white border !shadow-none border-gray-200">

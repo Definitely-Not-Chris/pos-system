@@ -8,9 +8,10 @@ import invoicesAPI from "../../../api/invoices";
 
 import UpdateModal from "../components/update-invoice-modal";
 import { InvoiceEntity } from "@pos/core/entities";
-import AddTransactionModal from "../../../custom-components/add-transaction-modal";
+import AddTransactionModal from "../components/add-transaction-modal";
 import { useNavigate } from "react-router";
 import { TableColumns } from "../../../components/table";
+import InvoiceStatus from "../../../custom-components/invoice-status";
 
 export default function () {
     const navigate = useNavigate()
@@ -25,6 +26,10 @@ export default function () {
             render: (data: InvoiceEntity) => data.company.name
         },
         {
+            label: 'Status',
+            render: (data: InvoiceEntity) => <InvoiceStatus {...data}/>
+        },
+        {
             label: 'amount',
             render: (data: InvoiceEntity) => data.amount.toFixed(2)
         },
@@ -33,7 +38,6 @@ export default function () {
             render: (data: InvoiceEntity) => data.totalBalance.toFixed(2)
         },
         'dateIssued',
-        'paymentDue',
         // {
         //     label: 'role',
         //     render: (value: any) => <Center><Chip variant="primary" size="small">{value.role}</Chip></Center>
@@ -63,7 +67,6 @@ export default function () {
                     <TextField 
                         startIcon={HiOutlineMagnifyingGlass}
                         className="!py-2.5"
-                        containerClassName="!rounded-2xl" 
                     />
                     <CreateModal onSuccess={refetch} />
                     <IconButton className="bg-white border !shadow-none border-gray-200">

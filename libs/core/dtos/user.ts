@@ -11,7 +11,7 @@ export const UpdateUserSchema = RegisterUserSchema
         firstName: z.string().optional(),
         lastName: z.string().optional(),
         password: z.string().optional(),
-        role: z.enum([RoleEnum.ADMIN, RoleEnum.CASHIER]).optional()
+        role: z.enum([RoleEnum.ADMIN, RoleEnum.INVOICE, RoleEnum.PAYMENT]).optional()
     })
 
 export type UpdateUserDto = z.infer<typeof UpdateUserSchema>

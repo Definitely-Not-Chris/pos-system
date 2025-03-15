@@ -46,7 +46,7 @@ export class TransactionService {
     await transaction.save()
     
     const invoice = await this.invoiceRepository.findOne({ 
-      where: { id: dto.invoiceId },
+      where: { id: dto.invoice.id },
       relations: {
         transactions: true
       } 
