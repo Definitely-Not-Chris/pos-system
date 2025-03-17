@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateCompanyDto, PaginationDto } from '@pos/core/dtos';
+import { CreateCompanyDto, PaginationDto, UpdateCompanyDto } from '@pos/core/dtos';
 import { CompanyEntity } from '@pos/core/entities/company';
 import { PaginationResult } from '@pos/core/types';
 import { FindOptionsWhere, Repository } from 'typeorm';
@@ -43,6 +43,17 @@ export class CompanyService {
 
   async remove(id: number): Promise<void> {
     await this.repository.delete(id);
+  }
+
+  async update(id: number, dto: UpdateCompanyDto) {
+    const invoice = await this.repository.findOneBy({ id });
+
+    if (!invoice) {
+      throw new NotFoundException(`Entity with ID ${id} not found`);
+    }
+
+    this.repository.merge(invoice, dto);
+    return this.repository.save(invoice);
   }
 
   async create(dto: CreateCompanyDto) {

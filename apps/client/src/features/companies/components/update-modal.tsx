@@ -4,16 +4,16 @@ import { Button, IconButton } from "../../../components/button"
 import Modal from "../../../components/modal"
 import { FormProvider, useForm } from "react-hook-form"
 import { zodResolver } from '@hookform/resolvers/zod';
-import { UpdateCheckDto, UpdateCheckSchema } from "@pos/core/dtos"
+import { UpdateCompanyDto, UpdateCompanySchema } from "@pos/core/dtos"
 import RhfTextField from "../../../custom-components/rhf-text-field"
 import { useMutation } from "react-query"
-import users from "../../../api/users"
-import { CheckEntity } from "@pos/core/entities"
+import comapnies from "../../../api/companies"
+import { CompanyEntity } from "@pos/core/entities"
 import { omit } from "lodash"
 
 interface Props {
     onSuccess: () => Promise<any>,
-    defaultvalues: CheckEntity
+    defaultvalues: CompanyEntity
 }
 
 
@@ -21,14 +21,14 @@ export default function (props: Props) {
     const [open, setOpen] = useState(false)
     const onToggle = () => setOpen(v => !v)
 
-    const { mutateAsync, isLoading } = useMutation((data: UpdateCheckDto) => users.post(data))
-    const form = useForm<UpdateCheckDto>({ 
+    const { mutateAsync, isLoading } = useMutation((data: UpdateCompanyDto) => comapnies.put(props.defaultvalues.id, data))
+    const form = useForm<UpdateCompanyDto>({ 
         defaultValues: props.defaultvalues,
-        resolver: zodResolver(UpdateCheckSchema) 
+        resolver: zodResolver(UpdateCompanySchema) 
     })
     const { handleSubmit, reset } = form
 
-    const onSubmit = (data: UpdateCheckDto) => {
+    const onSubmit = (data: UpdateCompanyDto) => {
         mutateAsync(data)
             .then(props.onSuccess)
             .then(() => setOpen(false))
@@ -49,15 +49,9 @@ export default function (props: Props) {
                     className="flex flex-col space-y-2.5"
                     onSubmit={handleSubmit(onSubmit)}
                 >
-                    <RhfTextField name="accountNumber" inputProps={{ placeholder: "Account Number" }}/>
-                    <RhfTextField name="payee" inputProps={{ placeholder: "Payee" }}/>
-                    <RhfTextField name="amount" inputProps={{ placeholder: "Amount", type: 'number' }}/>
-                    <RhfTextField name="payerName" inputProps={{ placeholder: "Payer Name" }}/>
-                    <RhfTextField name="payerAddress" inputProps={{ placeholder: "Payer Address" }}/>
-                    <RhfTextField name="dateIssued" inputProps={{ placeholder: "Date Issued" }}/>
-                    <RhfTextField name="routingNumber" inputProps={{ placeholder: "Routing Number" }}/>
-                    <RhfTextField name="memoLine" inputProps={{ placeholder: "Memo Line" }}/>
-                    <RhfTextField name="bankFractional" inputProps={{ placeholder: "Bank Fractional" }}/>
+                    <RhfTextField name="name" inputProps={{ placeholder: "Name" }}/>
+                    <RhfTextField name="address" inputProps={{ placeholder: "Address" }}/>
+                    <RhfTextField name="contactNumber" inputProps={{ placeholder: "Contact Number" }}/>
                     <Button loading={isLoading} className="mt-6">Submit</Button>
                 </form>
             </Modal>
