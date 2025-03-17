@@ -13,6 +13,8 @@ export class BillingStatementController {
 
   @Get()
   findAll(@Query() query: GetAllBillingStatementQuery) {
+    query.page = query.page ?? 1
+    query.pageSize = query.pageSize ?? 10
     return this.service.getAll(query);
   }
 

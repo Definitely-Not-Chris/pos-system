@@ -84,7 +84,12 @@ export default function({ className, lastRow, columns: headers, data=[], loading
                 </tbody>
             </table>
         
-            {data.length == 0 && (
+            {loading && (
+                <div className="my-8">
+                    <p className="text-md font-medium text-gray-300">Loading</p>
+                </div>
+            )}
+            {data.length == 0 && !loading && (
                 <div className="my-8">
                     <p className="text-md font-medium text-gray-300">No data for this module yet</p>
                 </div>

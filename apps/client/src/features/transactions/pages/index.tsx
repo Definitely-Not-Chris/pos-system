@@ -12,9 +12,19 @@ import { TableColumns } from "../../../components/table";
 import Chip from "../../../components/chip";
 import { lowerCase } from "lodash";
 import PaymentType from "../../../custom-components/payment-type";
+import { useState } from "react";
+import useSearchQuery from "../../../hooks/custom-use-query";
 
 export default function () {
-    const { data, isLoading, refetch } = useQuery('transactions', () => transactionsAPI.getAll())
+    const [search, setSearch] = useState('')
+
+    const { data, isLoading, refetch, renderSearchField } = useSearchQuery({
+        search,
+        setSearch,
+        queryKey: ['transactions', search],
+        queryFn: () => transactionsAPI.getAll({ search }),
+    })
+   
     const transactions = data?.data ?? []
 
     const columns: TableColumns = [
@@ -43,10 +53,7 @@ export default function () {
             actions={(
                 <>
                     <div className="flex-1"></div>
-                    <TextField 
-                        startIcon={HiOutlineMagnifyingGlass}
-                        className="!py-2.5"
-                    />
+                    {renderSearchField()}
                     <CreateModal onSuccess={refetch} />
                     <IconButton className="bg-white border !shadow-none border-gray-200">
                         <HiOutlineChevronLeft className="size-4.5 text-gray-700" />

@@ -12,10 +12,20 @@ import AddTransactionModal from "../components/add-transaction-modal";
 import { useNavigate } from "react-router";
 import { TableColumns } from "../../../components/table";
 import InvoiceStatus from "../../../custom-components/invoice-status";
+import { useState } from "react";
+import useSearchQuery from "../../../hooks/custom-use-query";
 
 export default function () {
     const navigate = useNavigate()
-    const { data, isLoading, refetch } = useQuery('invoices', () => invoicesAPI.getAll())
+
+    const [search, setSearch] = useState('')
+    const { data, isLoading, refetch, renderSearchField } = useSearchQuery({
+        search,
+        setSearch,
+        queryKey: ['invoices', search],
+        queryFn: () => invoicesAPI.getAll({ search }),
+    })
+
     const invoices = data?.data ?? []
 
     const columns: TableColumns = [
@@ -64,10 +74,7 @@ export default function () {
             actions={(
                 <>
                     <div className="flex-1"></div>
-                    <TextField 
-                        startIcon={HiOutlineMagnifyingGlass}
-                        className="!py-2.5"
-                    />
+                    {renderSearchField()}
                     <CreateModal onSuccess={refetch} />
                     <IconButton className="bg-white border !shadow-none border-gray-200">
                         <HiOutlineChevronLeft className="size-4.5 text-gray-700" />

@@ -1,6 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { InvoiceService } from './invoice.service';
-import { CreateInvoiceDto } from '@pos/core/dtos';
+import { CreateInvoiceDto, PaginationDto } from '@pos/core/dtos';
 
 @Controller('v1/invoices')
 export class InvoiceController {
@@ -12,8 +12,10 @@ export class InvoiceController {
   }
 
   @Get()
-  findAll() {
-    return this.service.getAll();
+  findAll(@Query() query: PaginationDto) {
+    query.page = query.page ?? 1
+    query.pageSize = query.pageSize ?? 10
+    return this.service.getAll(query);
   }
 
   @Get(':id')

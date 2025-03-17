@@ -1,6 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { TransactionService } from './transaction.service';
-import { CreateTransactionDto } from '@pos/core/dtos';
+import { CreateTransactionDto, PaginationDto } from '@pos/core/dtos';
 
 @Controller('v1/transactions')
 export class TransactionController {
@@ -12,10 +12,12 @@ export class TransactionController {
   }
 
   @Get()
-  findAll() {
-    return this.service.getAll();
+  findAll(@Query() query: PaginationDto) {
+    query.page = query.page ?? 1
+    query.pageSize = query.pageSize ?? 10
+    return this.service.getAll(query);
   }
-
+  
   @Get(':id')
   findOne(@Param('id') id: number) {
     return this.service.getOne({ id });

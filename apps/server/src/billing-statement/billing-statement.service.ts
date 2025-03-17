@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CreateCompanyDto, GetAllBillingStatementQuery } from '@pos/core/dtos';
 import { CompanyEntity, InvoiceEntity } from '@pos/core/entities';
 import { PaginationResult } from '@pos/core/types';
-import { Between, Equal, FindOptionsWhere, Repository } from 'typeorm';
+import { Between, Equal, FindOptionsWhere, ILike, Repository } from 'typeorm';
 
 @Injectable()
 export class BillingStatementService {
@@ -16,9 +16,19 @@ export class BillingStatementService {
   ) {}
 
   async getAll(query: GetAllBillingStatementQuery): Promise<PaginationResult<CompanyEntity>> {
-    query.page = query.page ?? 1
-    query.pageSize = query.pageSize ?? 10
+    let search: FindOptionsWhere<CompanyEntity>[] = []
+        
+    if(query.search) {
+      const like = ILike(`%${query.search}%`)
 
+      search = [
+        { name: like },
+        { invoices: { name: like }},
+        { invoices: { invoiceNumber: Number(query.search) || 0 }},
+        { id: Number(query.search) || 0 }
+      ]
+    }
+    
     let [companies, total] = await this.companyRepository.findAndCount({ 
       skip: (query.page - 1) * query.pageSize,
       take: query.pageSize,
@@ -27,6 +37,7 @@ export class BillingStatementService {
           transactions: true
         }
       },
+      where: search,
       order: { 
         dateCreated: "desc",
       },

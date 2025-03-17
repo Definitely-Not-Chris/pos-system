@@ -4,7 +4,7 @@ import { CreateTransactionDto, PaginationDto } from '@pos/core/dtos';
 import { InvoiceEntity } from '@pos/core/entities';
 import { TransactionEntity } from '@pos/core/entities/transaction';
 import { PaginationResult } from '@pos/core/types';
-import { Repository } from 'typeorm';
+import { FindOptionsWhere, ILike, Repository } from 'typeorm';
 
 @Injectable()
 export class TransactionService {
@@ -16,7 +16,21 @@ export class TransactionService {
     private invoiceRepository: Repository<InvoiceEntity>,
   ) {}
 
-  async getAll(dto: PaginationDto = { page: 1, pageSize: 10 }): Promise<PaginationResult<TransactionEntity>> {
+  async getAll(dto: PaginationDto): Promise<PaginationResult<TransactionEntity>> {
+    let search: FindOptionsWhere<TransactionEntity>[] = []
+    
+    if(dto.search) {
+      const like = ILike(`%${dto.search}%`)
+
+      search = [
+        { invoice: { company: { name: like } }},
+        { invoice: { name: like }},
+        { invoice: { invoiceNumber: Number(dto.search) || 0 }},
+        { type: like },
+        { id: Number(dto.search) || 0 }
+      ]
+    }
+    
     const [data, total] = await this.transactionRepository.findAndCount({ 
       skip: (dto.page - 1) * dto.pageSize,
       take: dto.pageSize,
@@ -25,6 +39,7 @@ export class TransactionService {
           company: true
         }
       },
+      where: search,
       order: { 
         dateCreated: "desc",
       },

@@ -11,10 +11,21 @@ import UpdateModal from "../components/update-modal";
 import Chip from "../../../components/chip";
 import { TextField } from "../../../components/text-field";
 import InvoiceStatus from "../../../custom-components/invoice-status";
+import useSearchQuery from "../../../hooks/custom-use-query";
+import { useState } from "react";
 
 export default function () {
     const navigate = useNavigate()
-    const { data, isLoading, refetch } = useQuery('billing-statements', () => statementsAPI.getAll())
+    
+    const [search, setSearch] = useState('')
+    const { data, isLoading, renderSearchField } = useSearchQuery({
+        search,
+        setSearch,
+        queryKey: ['statements', search],
+        queryFn: () => statementsAPI.getAll({ search }),
+    })
+
+    
     const companies = data?.data ?? []
 
     const columns: TableColumns = [
@@ -55,10 +66,7 @@ export default function () {
             actions={(
                 <>
                     <div className="flex-1"></div>
-                    <TextField 
-                        startIcon={HiOutlineMagnifyingGlass}
-                        className="!py-2.5"
-                    />
+                    {renderSearchField()}
                     <IconButton className="bg-white border !shadow-none border-gray-200">
                         <HiOutlineChevronLeft className="size-4.5 text-gray-700" />
                     </IconButton>
