@@ -19,11 +19,16 @@ https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-up-nod
 https://medium.com/@yakuphanbilgic3/setting-up-and-configuring-postgresql-on-an-aws-ec2-ubuntu-instance-a-comprehensive-guide-244644acc7cb
 
 [Transfer files to ec2 instance using scp]
-ssh -i "path/app-456789.pem" -r . "ip ubuntu@ec2-43-204-144-44.ap-south-1.compute.amazonaws.com"
-ssh -i "path/app-456789.pem" -r package.json "ip ubuntu@ec2-43-204-144-44.ap-south-1.compute.amazonaws.com"
+scp -i "path/app-456789.pem" -r . "ubuntu@ec2-43-204-144-44.ap-south-1.compute.amazonaws.com:path"
+
+scp -i "path/app-456789.pem" -r package.json "ubuntu@ec2-43-204-144-44.ap-south-1.compute.amazonaws.com:pos-system/apps/server"
 
 [Create a screen session in ubuntu]
 screen -S "name"
+
 [View created sessions]
 screen -ls
+
+[To detached screen]
+ctrl A + D
 

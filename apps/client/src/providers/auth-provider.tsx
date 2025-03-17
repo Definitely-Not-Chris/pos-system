@@ -11,12 +11,14 @@ export type AuthContextType = {
     user?: UserEntity,
     loading: boolean,
     login: (dto: SignInUserDto) => Promise<void>,
+    logout: () => Promise<void>,
     redirect: string
 }
 
 const AuthContext = createContext<AuthContextType>({
     loading: false,
     login: () => Promise.resolve(),
+    logout: () => Promise.resolve(),
     redirect: ''
 })
 const tokenStorage = new TokenStorage(TOKEN_KEY)
@@ -56,13 +58,18 @@ export const AuthContextWrapper = (Element: () => ReactNode) => () => {
         setUser(user)
     }
 
+    async function logout() {
+        tokenStorage.reset()
+        setUser(undefined)
+    }
+
     const loginPath = "/auth/login"
     const authorizedRoutes = routes.filter(route => route.isAuthorized(user))
     const redirect = user ? authorizedRoutes[0].url : loginPath
 
     return (
         <AuthContext.Provider 
-            value={{ user, loading, login, redirect }}
+            value={{ user, loading, login, redirect, logout }}
         >
             {<Element />}
         </AuthContext.Provider>

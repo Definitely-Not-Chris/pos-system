@@ -9,7 +9,7 @@ import { IconButton } from "../../components/button";
 import { UserEntity } from "@pos/core/entities";
 
 function SideDrawer() {
-    const { user } = useAuth()
+    const { user, logout } = useAuth()
     const location = useLocation();
     const navigate = useNavigate()
 
@@ -42,8 +42,7 @@ function SideDrawer() {
                         {startCase(`${user.firstName} ${user.lastName}`)} 
                     </p>
                     {/* <div className="size-12 rounded-full bg-gray-200"></div> */}
-                    <IconButton className="!shadow-none !p-3.5 !rounded-full !bg-gray-200/50"><HiMiniArrowRightOnRectangle className="size-5 text-gray-600"/></IconButton>
-                    
+                    <IconButton onClick={logout} className="!shadow-none !p-3.5 !rounded-full !bg-gray-200/50"><HiMiniArrowRightOnRectangle className="size-5 text-gray-600"/></IconButton>
                 </div>
             )}
         </div>
