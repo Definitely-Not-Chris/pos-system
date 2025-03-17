@@ -7,8 +7,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { UpdateInvoiceDto, UpdateInvoiceSchema } from "@pos/core/dtos"
 import RhfTextField from "../../../custom-components/rhf-text-field"
 import { useMutation } from "react-query"
-import users from "../../../api/users"
+import invoices from "../../../api/invoices"
 import { InvoiceEntity } from "@pos/core/entities"
+import CompanyField from "./company-field"
 
 interface Props {
     onSuccess: () => Promise<any>,
@@ -20,7 +21,7 @@ export default function (props: Props) {
     const [open, setOpen] = useState(false)
     const onToggle = () => setOpen(v => !v)
 
-    const { mutateAsync, isLoading } = useMutation((data: UpdateInvoiceDto) => users.post(data))
+    const { mutateAsync, isLoading } = useMutation((data: UpdateInvoiceDto) => invoices.put(props.defaultvalues.id, data))
     const form = useForm<UpdateInvoiceDto>({ 
         defaultValues: props.defaultvalues,
         resolver: zodResolver(UpdateInvoiceSchema) 
@@ -50,9 +51,9 @@ export default function (props: Props) {
                 >
                     <RhfTextField name="invoiceNumber" inputProps={{ placeholder: "Invoice Number", type: 'number' }}/>
                     <RhfTextField name="name" inputProps={{ placeholder: "Name" }}/>
-                    <RhfTextField name="dateIssued" inputProps={{ placeholder: "Date Issued" }}/>
-                    <RhfTextField name="company" inputProps={{ placeholder: "Bill To" }}/>
                     <RhfTextField name="amount" inputProps={{ placeholder: "Amount", type: 'number' }}/>
+                    <CompanyField />
+                    <RhfTextField name="dateIssued" inputProps={{ placeholder: "Date Issued" }}/>
                     <RhfTextField name="paymentDue" inputProps={{ placeholder: "Payment Due" }}/>
                     <Button loading={isLoading} className="mt-6">Submit</Button>
                 </form>

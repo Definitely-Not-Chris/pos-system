@@ -63,7 +63,7 @@ export default function () {
                     </IconButton>
                 </>
             )}
-            title="Transactions" 
+            title="Payment Transaction Entry" 
             columns={columns}
             data={transactions}
             loading={isLoading}

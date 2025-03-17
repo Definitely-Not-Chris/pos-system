@@ -14,8 +14,8 @@ export default class AxiosAPI<T> {
         return data
     }
 
-    put<D>(data?: D, params?: any): Promise<T | undefined> {
-        return this.api.put(`${this.endpoint}/edit`, data, { params })
+    put<D>(id: any, data?: D): Promise<T | undefined> {
+        return this.api.put(this.endpoint + `/${id}`, data)
     }
     
     post<D>(data?: D, params?: any): Promise<T | undefined> {

@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateInvoiceDto, PaginationDto } from '@pos/core/dtos';
+import { CreateInvoiceDto, PaginationDto, UpdateInvoiceDto } from '@pos/core/dtos';
 import { CompanyEntity, InvoiceEntity } from '@pos/core/entities';
 import { PaginationResult } from '@pos/core/types';
 import { FindOptionsWhere, ILike, Like, Repository } from 'typeorm';
@@ -63,6 +63,17 @@ export class InvoiceService {
 
   async remove(id: number): Promise<void> {
     await this.invoiceRepository.delete(id);
+  }
+
+  async update(id: number, dto: UpdateInvoiceDto) {
+    const invoice = await this.invoiceRepository.findOneBy({ id });
+
+    if (!invoice) {
+      throw new NotFoundException(`Entity with ID ${id} not found`);
+    }
+
+    this.invoiceRepository.merge(invoice, dto);
+    return this.invoiceRepository.save(invoice);
   }
 
   async create(dto: CreateInvoiceDto) {
