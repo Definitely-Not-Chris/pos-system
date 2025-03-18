@@ -50,6 +50,5 @@ export default function useSearchQuery<TQueryFnData = unknown, TError = unknown,
         search,
         searching,
         ...others,
-        isLoading: others.isLoading || searching
     }
 }

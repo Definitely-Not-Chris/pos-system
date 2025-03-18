@@ -7,7 +7,7 @@ import { useQuery } from "react-query";
 import companiesAPI from "../../../api/companies";
 
 import UpdateModal from "../components/update-modal";
-import { CheckEntity } from "@pos/core/entities";
+import { CheckEntity, CompanyEntity } from "@pos/core/entities";
 import { TableColumns } from "../../../components/table";
 
 export default function () {
@@ -21,7 +21,7 @@ export default function () {
         'contactNumber',
         {
             className: "!ps-0",
-            render: (data: CheckEntity) => (
+            render: (data: CompanyEntity) => (
                 <div className="flex row justify-end space-x-2 *:group-hover:!shadow *:!shadow-none *:!opacity-50 *:group-hover:!opacity-100">
                     {/* <Button 
                         startIcon={HiOutlinePlus} 

@@ -12,13 +12,16 @@
     "isolatedModules": true,
     "moduleDetection": "force",
     "noEmit": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
 
     /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "strictPropertyInitialization": false,
+    "noUnusedLocals": false,
+    "noImplicitAny": false,
+    "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": false
   },
   "include": ["vite.config.ts"]
 }
