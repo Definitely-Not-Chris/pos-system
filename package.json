@@ -10,6 +10,7 @@
   "scripts": {
     "core:build": "yarn workspace @pos/core run build",
     "client:dev": "yarn core:build && yarn workspace @pos/client run dev",
+    "client:build": "yarn core:build && yarn workspace @pos/client run build",
     "server:dev": "yarn core:build && yarn workspace @pos/server run dev",
     "client:prod": "yarn workspace @pos/client run prod",
     "server:prod": "yarn workspace @pos/server run start:prod"
