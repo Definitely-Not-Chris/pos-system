@@ -7,6 +7,9 @@ import { HiMiniArrowRightOnRectangle  } from "react-icons/hi2";
 import { useAuth } from "../../providers/auth-provider";
 import { IconButton } from "../../components/button";
 import { UserEntity } from "@pos/core/entities";
+import Logo from '../../assets/logo.png';
+import moment from "moment";
+
 
 function SideDrawer() {
     const { user, logout } = useAuth()
@@ -53,7 +56,8 @@ function Header() {
     return (
         <header className="space-x-3 px-3 py-3 flex justify-between">
             <div className="flex flex-row sm:min-w-72 space-x-3 ps-2 pe-3 m-0">
-                <div className="size-12.5 rounded-full bg-white"></div>
+                <img src={Logo} alt="Logo" className="self-center size-12.5 rounded-full" />
+
                 <Chip className="flex-1">CODE 456-789</Chip>
             </div>
             {/* <Chip 
@@ -63,7 +67,7 @@ function Header() {
             >
                 Point of Sales
             </Chip> */}
-            <Chip>Wed, 29 May 2024</Chip>
+            <Chip>{moment().format('ddd, DD MMMM YY')}</Chip>
         </header>
     )
 }

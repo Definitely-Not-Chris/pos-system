@@ -6,7 +6,7 @@ import { SignInUserDto, SignInUserSchema } from "@pos/core/dtos";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "react-query";
 import RhfTextField from "../../../custom-components/rhf-text-field";
-
+import Logo from '../../../assets/logo.png';
 
 export default function() {
     const { loading: authenticating, login } = useAuth()
@@ -20,9 +20,8 @@ export default function() {
     return (
         <FormProvider {...methods}>
             <Card className='max-w-lg relative flex flex-col mb-12'>
-                <div className="mt-6 mb-4 self-center size-16 bg-gray-200 rounded-full">
-                </div>
-                <p className='text-gray-600 mb-6 font-medium'>456-789</p>
+                <img src={Logo} alt="Logo" className="mt-6 mb-4 self-center size-18 rounded-full" />
+                <p className='text-gray-600 mb-6 font-medium'>Invoice Management System</p>
                 <form 
                     className="w-full flex flex-col space-y-2.5"
                     onSubmit={handleSubmit(onSubmit)}
