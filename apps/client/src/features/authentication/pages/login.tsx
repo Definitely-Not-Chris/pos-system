@@ -22,7 +22,7 @@ export default function() {
             <Card className='max-w-lg relative flex flex-col mb-12'>
                 <img src={Logo} alt="Logo" className="mt-6 mb-4 self-center size-18 rounded-full" />
                 <p className='text-gray-600 mb-6 font-medium'>Invoice Management System</p>
-                <form 
+                <form noValidate  
                     className="w-full flex flex-col space-y-2.5"
                     onSubmit={handleSubmit(onSubmit)}
                 >

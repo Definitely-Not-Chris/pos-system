@@ -16,16 +16,16 @@ export class CheckEntity extends BaseEntity {
     @Column()
     dateIssued: string
 
-    @Column()
+    @Column({ nullable: true })
     routingNumber: string
     
     @Column()
     accountNumber: string
     
-    @Column()
+    @Column({ nullable: true })
     memoLine: string
 
-    @Column()
+    @Column({ type: 'float' })
     amount: number
 
     @Column()

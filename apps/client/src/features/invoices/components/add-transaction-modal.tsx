@@ -49,7 +49,7 @@ export default function (props: Props) {
                 onToggle={onToggle}
                 title="Add Transaction"
             >
-                <form 
+                <form noValidate  
                     className="flex flex-col space-y-2.5"
                     onSubmit={handleSubmit(onSubmit)}
                 >

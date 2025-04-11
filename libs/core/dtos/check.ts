@@ -6,10 +6,10 @@ export const CreateCheckSchema = z.object({
     payerName: z.string(),
     payerAddress: z.string(),
     dateIssued: z.string(),
-    routingNumber: z.string(),
+    routingNumber: z.string().optional(),
     accountNumber: z.string(),
-    memoLine: z.string(),
-    amount: z.number(),
+    memoLine: z.string().optional(),
+    amount: z.number().positive().transform((val) => Number(val)),
     bankFractional: z.string(),
 });
 
